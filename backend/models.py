@@ -10,7 +10,7 @@ class Users(Base):
     authKey = Column(String, unique=True, nullable=False)
 
 class Entries(Base):
-    __tablename__ = "entires"
+    __tablename__ = "entries"
 
     entryId = Column(Integer, primary_key=True, index=True, nullable=False)
     userId = Column(Integer, index=True, nullable=False)

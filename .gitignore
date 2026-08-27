@@ -1,4 +1,5 @@
 backend/node_modules
+backend/entries.db
 backend/users.db
 .DS_Store
 .venv

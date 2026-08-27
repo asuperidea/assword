@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
 from models import Users, Entries
-from database import engine, SessionLocal, Base
+from database import engineUsers, engineEntries, SessionUsers, SessionEntries, Base
 import hashlib
 import os
 from dotenv import load_dotenv
@@ -16,7 +16,8 @@ load_dotenv()
 JWT_KEY = os.getenv("JWT_KEY")
 
 app = FastAPI()
-Base.metadata.create_all(engine)
+Base.metadata.create_all(engineUsers)
+Base.metadata.create_all(engineEntries)
 
 class UserBase(BaseModel):
     userId: int
@@ -55,28 +56,36 @@ class EntryBase(BaseModel):
     title: str
     content: str
 
-def get_db():
-    db = SessionLocal() 
+def get_db_users():
+    db_users = SessionUsers() 
     try:
-        yield db
+        yield db_users
     finally:
-        db.close()
+        db_users.close()
 
-get_db()
+def get_db_entries():
+    db_entries = SessionEntries() 
+    try:
+        yield db_entries
+    finally:
+        db_entries.close()
+
+get_db_users()
+get_db_entries()
 
 @app.get("/")
 def root():
     return {"message":"Welcome, Server Running"}
 
 @app.get("/login/start", response_model=UserSalt)
-def loginStart(userEmail:str, db:Session = Depends(get_db)):
+def loginStart(userEmail:str, db:Session = Depends(get_db_users)):
     user = db.query(Users).filter(Users.email == userEmail).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found!")
     return user
 
 @app.get("/login/validate")
-def loginValidate(userEmail:str, userAuth:str, db:Session = Depends(get_db)):
+def loginValidate(userEmail:str, userAuth:str, db:Session = Depends(get_db_users)):
     user = db.query(Users).filter(Users.email == userEmail).first()
     hash = hashlib.sha256(userAuth.encode()).hexdigest()
     if hash == user.authKey:
@@ -85,15 +94,29 @@ def loginValidate(userEmail:str, userAuth:str, db:Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Invalid email or authkey")
 
 @app.post("/signup")
-def signup(user: UserCreate, db:Session = Depends(get_db)):
+def signup(user: UserCreate, db:Session = Depends(get_db_users)):
     if db.query(Users).filter(Users.email == user.email).first():
         raise HTTPException(status_code=409, detail="User email already exists!")
     newUser = Users(**user.model_dump())
     newUserHash = hashlib.sha256(newUser.authKey.encode())
     print(newUserHash)
     newUser.authKey = newUserHash.hexdigest()
-    print(newUser.authKey)
     db.add(newUser)
     db.commit()
     db.refresh(newUser)
     return newUser
+
+
+@app.post("/entry/new")
+def newEntry(jwt:str, entry:EntryCreate, db:Session = Depends(get_db_entries)):
+    decodedJWT = decodeJWT(jwt, JWT_KEY)
+    if isinstance(decodedJWT, str):
+        raise HTTPException(status_code=400, detail="Invalid JWT")
+    elif decodedJWT["sub"] == "Log In Validation":
+        newEntry = Entries(**entry.model_dump())
+        db.add(newEntry)
+        db.commit()
+        db.refresh(newEntry)
+        return newEntry
+    else:
+        raise HTTPException(status_code=400, detail="Invalid JWT")

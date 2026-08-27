@@ -27,4 +27,4 @@ def decodeJWT(token, key):
     except jwt.InvalidTokenError:
         return "Invalid Token"
 
-print(decodeJWT("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJMb2dpbiBWYWxpZGF0aW9uIiwibmFtZSI6IjIiLCJleHAiOjE3ODc4NzQ5MzcsImlhdCI6MTc4Nzg3MTMzN30.2Ma3xvfUo_jNQqVxzowrZ3UcAmA71THJGXKxlqDsnwU", JWT_KEY))
+print(decodeJWT("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJMb2cgSW4gVmFsaWRhdGlvbiIsImlkIjoiMSIsImVtYWlsIjoic2ltb24iLCJleHAiOjE3ODc4NzUzMzUsImlhdCI6MTc4Nzg3MTczNX0.DYolkVfqo4QDEDlf5BoFtL8TbQtyTfb9tykTLs4olbQ", JWT_KEY))
