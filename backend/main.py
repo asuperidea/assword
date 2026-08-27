@@ -7,14 +7,16 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
 from models import Users, Entries
 from database import engine, SessionLocal, Base
+import hashlib
+import os
+from dotenv import load_dotenv
+from jwtfuncs import createJWT, decodeJWT
+
+load_dotenv()
+JWT_KEY = os.getenv("JWT_KEY")
 
 app = FastAPI()
 Base.metadata.create_all(engine)
-
-class UserCreate(BaseModel):
-    email: str
-    salt: str
-    authKey: str
 
 class UserBase(BaseModel):
     userId: int
@@ -25,11 +27,24 @@ class UserBase(BaseModel):
     class Config:
         from_attributes = True
 
+class UserCreate(BaseModel):
+    email: str
+    salt: str
+    authKey: str
+
 class UserSalt(BaseModel):
+    salt: str
+
+class UserId(BaseModel):
     salt: str
 
 class EntryCreate(BaseModel):
     userId: int
+    title: str
+    content: str
+
+class EntryGet(BaseModel):
+    entryId: int
     title: str
     content: str
 
@@ -52,20 +67,32 @@ get_db()
 def root():
     return {"message":"Welcome, Server Running"}
 
-@app.get("/users/getsalt/", response_model=UserSalt)
-def getUserSalt(userEmail:str, db:Session = Depends(get_db)):
+@app.get("/login/start", response_model=UserSalt)
+def loginStart(userEmail:str, db:Session = Depends(get_db)):
     user = db.query(Users).filter(Users.email == userEmail).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found!")
     return user
 
-@app.post("/users/adduser")
-def addUser(user: UserCreate, db:Session = Depends(get_db)):
+@app.get("/login/validate")
+def loginValidate(userEmail:str, authKey:str, db:Session = Depends(get_db)):
+    user = db.query(Users).filter(Users.email == userEmail).first()
+    hash = authKey = hashlib.sha256(authKey.encode()).hexdigest()
+    if hash == user.authKey:
+        return createJWT(JWT_KEY, "Login Validation", user.userId)
+
+    
+
+@app.post("/signup")
+def signup(user: UserCreate, db:Session = Depends(get_db)):
     if db.query(Users).filter(Users.email == user.email).first():
         raise HTTPException(status_code=409, detail="User email already exists!")
-
-    new_user = Users(**user.model_dump())
-    db.add(new_user)
+    newUser = Users(**user.model_dump())
+    newUserHash = hashlib.sha256(newUser.authKey.encode())
+    print(newUserHash)
+    newUser.authKey = newUserHash.hexdigest()
+    print(newUser.authKey)
+    db.add(newUser)
     db.commit()
-    db.refresh(new_user)
-    return new_user
+    db.refresh(newUser)
+    return newUser
