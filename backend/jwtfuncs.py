@@ -7,10 +7,11 @@ load_dotenv()
 JWT_KEY = os.getenv("JWT_KEY")
 
 
-def createJWT(key, subject, name):
+def createJWT(key, subject, id, email):
     payload = {
         "sub": f"{subject}",
-        "name": f"{name}",
+        "id": f"{id}",
+        "email": f"{email}",
         "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1),
         "iat": datetime.datetime.now(datetime.timezone.utc)
         }
@@ -26,5 +27,4 @@ def decodeJWT(token, key):
     except jwt.InvalidTokenError:
         return "Invalid Token"
 
-testtoken = createJWT(JWT_KEY, "TEST", "TEST2")
-print(decodeJWT(testtoken, JWT_KEY))
+print(decodeJWT("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJMb2dpbiBWYWxpZGF0aW9uIiwibmFtZSI6IjIiLCJleHAiOjE3ODc4NzQ5MzcsImlhdCI6MTc4Nzg3MTMzN30.2Ma3xvfUo_jNQqVxzowrZ3UcAmA71THJGXKxlqDsnwU", JWT_KEY))

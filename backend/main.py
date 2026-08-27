@@ -35,8 +35,9 @@ class UserCreate(BaseModel):
 class UserSalt(BaseModel):
     salt: str
 
-class UserId(BaseModel):
-    salt: str
+class UserValidate(BaseModel):
+    email:str
+    authKey:str
 
 class EntryCreate(BaseModel):
     userId: int
@@ -75,13 +76,13 @@ def loginStart(userEmail:str, db:Session = Depends(get_db)):
     return user
 
 @app.get("/login/validate")
-def loginValidate(userEmail:str, authKey:str, db:Session = Depends(get_db)):
+def loginValidate(userEmail:str, userAuth:str, db:Session = Depends(get_db)):
     user = db.query(Users).filter(Users.email == userEmail).first()
-    hash = authKey = hashlib.sha256(authKey.encode()).hexdigest()
+    hash = hashlib.sha256(userAuth.encode()).hexdigest()
     if hash == user.authKey:
-        return createJWT(JWT_KEY, "Login Validation", user.userId)
-
-    
+        return createJWT(JWT_KEY, "Log In Validation", user.userId, user.email)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid email or authkey")
 
 @app.post("/signup")
 def signup(user: UserCreate, db:Session = Depends(get_db)):
