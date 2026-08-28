@@ -86,6 +86,8 @@ def loginStart(userEmail:str, db:Session = Depends(get_db_users)):
 @app.get("/login/validate")
 def loginValidate(userEmail:str, userAuth:str, db:Session = Depends(get_db_users)):
     user = db.query(Users).filter(Users.email == userEmail).first()
+    if not user:
+        raise HTTPException(status_code=400, detail="Invalid email or authkey")
     hash = hashlib.sha256(userAuth.encode()).hexdigest()
     if hash == user.authKey:
         return createJWT(JWT_KEY, "Log In Validation", user.userId, user.email)
