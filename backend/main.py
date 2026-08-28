@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, HTTPException, status, Depends
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, EmailStr
-from typing import Annotated
+from typing import Annotated, List
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -41,7 +41,6 @@ class UserValidate(BaseModel):
     authKey:str
 
 class EntryCreate(BaseModel):
-    userId: int
     title: str
     content: str
 
@@ -122,16 +121,16 @@ def newEntry(jwt:str, entry:EntryCreate, db:Session = Depends(get_db_entries)):
     else:
         raise HTTPException(status_code=400, detail="Invalid JWT")
 
-@app.get("/entry/get")
+@app.get("/entry/get", response_model=List[EntryGet])
 def getEntries(jwt:str, db:Session = Depends(get_db_entries)):
     decodedJWT = decodeJWT(jwt, JWT_KEY)
     if decodedJWT == "Expired Token":
         raise HTTPException(status_code=400, detail="Expired JWT")
-    elif decodedJWT == "Invalid Token":
-        raise HTTPException(status_code=400, detail="Invalid JWT")
+    
     elif isinstance(decodedJWT, dict):
-        userId = decodedJWT["id"]
-        userEntries = db.query(Entries).filter(Entries.userId == userId)
+        id = decodedJWT["id"]
+        userEntries = db.query(Entries).filter(Entries.userId == id).all()
         return userEntries
+    
     else:
         raise HTTPException(status_code=400, detail="Invalid JWT")
