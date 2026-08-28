@@ -114,9 +114,24 @@ def newEntry(jwt:str, entry:EntryCreate, db:Session = Depends(get_db_entries)):
         raise HTTPException(status_code=400, detail="Invalid JWT")
     elif decodedJWT["sub"] == "Log In Validation":
         newEntry = Entries(**entry.model_dump())
+        newEntry.userId = decodedJWT["id"]
         db.add(newEntry)
         db.commit()
         db.refresh(newEntry)
         return newEntry
+    else:
+        raise HTTPException(status_code=400, detail="Invalid JWT")
+
+@app.get("/entry/get")
+def getEntries(jwt:str, db:Session = Depends(get_db_entries)):
+    decodedJWT = decodeJWT(jwt, JWT_KEY)
+    if decodedJWT == "Expired Token":
+        raise HTTPException(status_code=400, detail="Expired JWT")
+    elif decodedJWT == "Invalid Token":
+        raise HTTPException(status_code=400, detail="Invalid JWT")
+    elif isinstance(decodedJWT, dict):
+        userId = decodedJWT["id"]
+        userEntries = db.query(Entries).filter(Entries.userId == userId)
+        return userEntries
     else:
         raise HTTPException(status_code=400, detail="Invalid JWT")
