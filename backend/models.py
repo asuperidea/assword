@@ -16,3 +16,4 @@ class Entries(Base):
     userId = Column(Integer, index=True, nullable=False)
     title = Column(String, nullable=False)
     content = Column(String, nullable=False)
+    iv = Column(String, nullable=False)
