@@ -1,9 +1,9 @@
-export async function deriveAuthKey(masterPassword, salt) {
+export function deriveAuthKey(masterPassword, salt) {
   const authKey = masterPassword + salt + "AUTHKEY";
   return authKey;
 }
 
-export async function deriveEncryptionKey(masterPassword, salt) {
+export function deriveEncryptionKey(masterPassword, salt) {
   const encryptionKey = masterPassword + salt + "ENCRYPTIONKEY"
   return encryptionKey;
 }
@@ -37,7 +37,29 @@ export async function encryptEntry(encryptionKey, plainText) {
 }
 
 export async function decryptEntry(encryptionKey, ciphertext, iv) {
-  return window.crypto.subtle.decrypt({ name: "AES-GCM", iv }, encryptionKey, ciphertext);
+  const encoder = new TextEncoder();
+
+  const passwordBuffer = encoder.encode(encryptionKey);
+  const hashBuffer = await window.crypto.subtle.digest('SHA-256', passwordBuffer);
+
+  const cryptoKey = await window.crypto.subtle.importKey(
+    "raw",
+    hashBuffer,
+    { name: "AES-GCM" },
+    false,
+    ["decrypt"]
+  );
+
+  const ivBuffer = new Uint8Array(atob(iv).split('').map(c => c.charCodeAt(0)));
+  const ciphertextBuffer = new Uint8Array(atob(ciphertext).split('').map(c => c.charCodeAt(0)));
+
+  const decrypted = await window.crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: ivBuffer },
+    cryptoKey,
+    ciphertextBuffer
+  );
+
+  return new TextDecoder().decode(decrypted);
 }
 
 export function generateSalt() { 
@@ -49,9 +71,3 @@ export function generateSalt() {
     }
     return result;
  }
-
-const key = deriveEncryptionKey("67676767", generateSalt());
-const encrypted = encryptEntry(key, "Hello World");
-console.log(encrypted);
-const decrypted = decryptEntry(key, encrypted["ciphertext"], encrypted["iv"]);
-console.log(decrypted);
