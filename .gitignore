@@ -1,6 +1,7 @@
 backend/node_modules
 backend/entries.db
 backend/users.db
+backend/__pycache__
 .DS_Store
 .venv
 .env

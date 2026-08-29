@@ -26,5 +26,3 @@ def decodeJWT(token, key):
         return "Expired Token"
     except jwt.InvalidTokenError:
         return "Invalid Token"
-
-print(decodeJWT("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJMb2cgSW4gVmFsaWRhdGlvbiIsImlkIjoiMSIsImVtYWlsIjoic2ltb24iLCJleHAiOjE3ODc4NzUzMzUsImlhdCI6MTc4Nzg3MTczNX0.DYolkVfqo4QDEDlf5BoFtL8TbQtyTfb9tykTLs4olbQ", JWT_KEY))
