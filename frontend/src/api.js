@@ -1,6 +1,6 @@
 const baseURL = "https://assword-backend.simoncrystal.dev/"
 
-export async function loginStart(email) { 
+export async function APIloginStart(email) { 
     const url = baseURL + "login/start?userEmail=" + email
     
     try {
@@ -15,9 +15,22 @@ export async function loginStart(email) {
     console.error(error.message);
   }
 }
-export async function loginValidate(email, authKey) {  }  // GET /login/validate
-export async function signup(email, salt, authKey) {  }   // POST /signup
-export async function createEntry(jwt, title, ciphertext, iv) { }  // POST /entry/new
-export async function getEntries(jwt) { } 
+export async function APIloginValidate(email, authKey) {  }  // GET /login/validate
+export async function APIsignup(email, salt, authKey) {
+    const templete = new Request(baseURL + "signup", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+            email: email,
+            salt: salt,
+            authKey: authKey
+        }),
+    });
 
-console.log(loginStart("HELLOADI"));
+    const response1 = await fetch(templete);
+    console.log(response1.status);
+    
+    return response1;
+    }
+export async function APIcreateEntry(jwt, title, ciphertext, iv) { }  // POST /entry/new
+export async function APIgetEntries(jwt) { } 
