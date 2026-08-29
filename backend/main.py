@@ -16,6 +16,7 @@ import bcrypt
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 load_dotenv()
+
 JWT_KEY = os.getenv("JWT_KEY")
 if not JWT_KEY:
     raise RuntimeError("JWT_KEY environment variable is not set")
