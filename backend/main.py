@@ -22,10 +22,7 @@ Base.metadata.create_all(engineEntries)
 bearer_scheme = HTTPBearer()
 
 origins = [
-    "http://localhost:8001",   
-    "http://localhost:5500",
     "https://assword.simoncrystal.dev"
-    
 ]
 
 app.add_middleware(
