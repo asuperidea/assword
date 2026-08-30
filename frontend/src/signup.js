@@ -24,6 +24,7 @@ async function signUp(masterPassword, email) {
 }
 
 async function runSignUp() {
+    sessionStorage.clear();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const area = document.getElementById('area');
@@ -31,6 +32,7 @@ async function runSignUp() {
     try {
         const response = await signUp(password, email);
 
+        area.innerHTML = '';
         area.insertAdjacentHTML('beforeend', `
             <div style="width=100%; height: 4rem; background-color: rgb(0,255,0, 50)">
                 <h2>Login Successful</h2>
@@ -40,10 +42,10 @@ async function runSignUp() {
         return response;
     } catch (error) {
         console.log("CATCHING ERROR FROM SIGNUP.JS");
+        area.innerHTML = '';
         area.insertAdjacentHTML('beforeend', `
             <div style="width=100%; height: 4rem; background-color: rgb(255,0,0, 50)">
                 <h2>Login Failed</h2>
-                <p>${error}</p>
             </div>
         `);
     }

@@ -19,10 +19,10 @@ export async function APIloginStart(email) {
 
 export async function APIloginValidate(email, authKey) {
     const url = baseURL + "login/validate" + 
-    "?userEmail=" + 
-    encodeURIComponent(email) + 
-    "&userAuth=" +
-    authKey;
+    "?userEmail="+ 
+    encodeURIComponent(email)+ 
+    "&userAuth="+
+    encodeURIComponent(authKey);
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -30,6 +30,9 @@ export async function APIloginValidate(email, authKey) {
         throw new Error(`Response status: ${response.status}`);
     }
     const data = response.json();
+
+    sessionStorage.setItem("jwt", data);
+    
     return data;
 }
 
@@ -49,5 +52,3 @@ export async function APIsignup(email, salt, authKey) {
   }
 export async function APIcreateEntry(jwt, title, ciphertext, iv) { }  // POST /entry/new
 export async function APIgetEntries(jwt) { } 
-
-console.log(await APIloginValidate("test1@test.com", "AUTHKEY1"));
