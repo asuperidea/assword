@@ -14,17 +14,32 @@ from jwtfuncs import createJWT, decodeJWT
 from fakesalt import fakeSalt
 import bcrypt
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+Base.metadata.create_all(engineUsers)
+Base.metadata.create_all(engineEntries)
+bearer_scheme = HTTPBearer()
+
+origins = [
+    "http://localhost:8001",   
+    "http://localhost:5500",
+    "https://assword.simoncrystal.dev"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 load_dotenv()
 
 JWT_KEY = os.getenv("JWT_KEY")
 if not JWT_KEY:
     raise RuntimeError("JWT_KEY environment variable is not set")
-
-app = FastAPI()
-Base.metadata.create_all(engineUsers)
-Base.metadata.create_all(engineEntries)
-bearer_scheme = HTTPBearer()
 
 class UserBase(BaseModel):
     userId: int

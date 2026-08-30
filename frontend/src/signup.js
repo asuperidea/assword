@@ -12,23 +12,42 @@ function evalPassword(password) {
 async function signUp(masterPassword, email) {
     const passwordEval = evalPassword(masterPassword);
     if (!passwordEval.accept) {
-        return passwordEval.reason;
+        console.log("THROWING ERROR FROM SIGNUP.JS");
+        throw new Error('Response status: Password must be more then ten characters, less then 100');
     }
 
     const salt = generateSalt();
     const authKey = deriveAuthKey(masterPassword, salt);
 
-    const response = APIsignup(email, salt, authKey);
-    return response
-}
-
-function startSignUp() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    const response = signUp(password, email);
+    const response = await APIsignup(email, salt, authKey);
     return response;
 }
 
+async function runSignUp() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const area = document.getElementById('area');
+
+    try {
+        const response = await signUp(password, email);
+
+        area.insertAdjacentHTML('beforeend', `
+            <div style="width=100%; height: 4rem; background-color: rgb(0,255,0, 50)">
+                <h2>Login Successful</h2>
+                <a href="login.html"><button>Log In</button></a>
+            </div>
+        `);
+        return response;
+    } catch (error) {
+        console.log("CATCHING ERROR FROM SIGNUP.JS");
+        area.insertAdjacentHTML('beforeend', `
+            <div style="width=100%; height: 4rem; background-color: rgb(255,0,0, 50)">
+                <h2>Login Failed</h2>
+                <p>${error}</p>
+            </div>
+        `);
+    }
+}
+
 const button = document.getElementById("startSignUp");
-button.addEventListener("click", startSignUp);
+button.addEventListener("click", runSignUp);

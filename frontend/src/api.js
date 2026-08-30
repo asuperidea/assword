@@ -5,6 +5,7 @@ export async function APIloginStart(email) {
 
   const response = await fetch(url);
   if (!response.ok) {
+    console.log("THROWING ERROR FROM API.JS");
     throw new Error(`Response status: ${response.status}`);
   }
   return response.json();
@@ -18,8 +19,9 @@ export async function APIsignup(email, salt, authKey) {
         body: JSON.stringify({ email, salt, authKey }),
     });
 
-    if (! response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+    if (!response.ok) {
+        console.log("THROWING ERROR FROM API.JS");
+        throw new Error(`Response status: ${response.status}`);
     }    
     return response.json();
   }
