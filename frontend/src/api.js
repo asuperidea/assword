@@ -65,5 +65,3 @@ export async function APIgetEntries(jwt) {
     }
     return response.json();
 } 
-
-console.log(await APIgetEntries("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJMb2cgSW4gVmFsaWRhdGlvbiIsImlkIjoiNyIsImVtYWlsIjoib25lQGdtYWlsLmNvbSIsImV4cCI6MTc4ODIyODIxNCwiaWF0IjoxNzg4MjI0NjE0fQ.VgVBc3Ebvc03gqund1TqW9W6QG8565CJR9vEGiYtDUw"));
