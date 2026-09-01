@@ -160,6 +160,6 @@ def getEntries(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme
         userEntries = db.query(Entries).filter(Entries.userId == id).all()
         return userEntries
     elif decodedJWT == "Expired Token":
-            raise HTTPException(status_code=400, detail="Expired JWT")
+        raise HTTPException(status_code=400, detail="Expired JWT")
     else:
         raise HTTPException(status_code=400, detail="Invalid JWT")

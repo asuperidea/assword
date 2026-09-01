@@ -51,4 +51,19 @@ export async function APIsignup(email, salt, authKey) {
     return response.json();
   }
 export async function APIcreateEntry(jwt, title, ciphertext, iv) { }  // POST /entry/new
-export async function APIgetEntries(jwt) { } 
+export async function APIgetEntries(jwt) { 
+    const url = baseURL + "entry/get";
+
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {'Authorization': 'Bearer '+jwt}
+    });
+
+    if (!response.ok) {
+        console.log("THROWING ERROR FROM API.JS")
+        throw new Error(`Response status: ${response.status}`);
+    }
+    return response.json();
+} 
+
+console.log(await APIgetEntries("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJMb2cgSW4gVmFsaWRhdGlvbiIsImlkIjoiNyIsImVtYWlsIjoib25lQGdtYWlsLmNvbSIsImV4cCI6MTc4ODIyODIxNCwiaWF0IjoxNzg4MjI0NjE0fQ.VgVBc3Ebvc03gqund1TqW9W6QG8565CJR9vEGiYtDUw"));
