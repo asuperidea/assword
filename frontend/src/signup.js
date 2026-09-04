@@ -35,7 +35,7 @@ async function runSignUp() {
         area.innerHTML = '';
         area.insertAdjacentHTML('beforeend', `
             <div style="width=100%; height: 4rem; background-color: rgb(0,255,0, 50)">
-                <h2>Login Successful</h2>
+                <h2>Signup Successful</h2>
                 <a href="login.html"><button>Log In</button></a>
             </div>
         `);
@@ -45,7 +45,7 @@ async function runSignUp() {
         area.innerHTML = '';
         area.insertAdjacentHTML('beforeend', `
             <div style="width=100%; height: 4rem; background-color: rgb(255,0,0, 50)">
-                <h2>Login Failed</h2>
+                <h2>Signup Failed</h2>
             </div>
         `);
     }

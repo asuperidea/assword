@@ -1,3 +1,5 @@
+import { encryptEntry, deriveEncryptionKey } from './crypto.js';
+
 const baseURL = "https://assword-backend.simoncrystal.dev/"
 
 export async function APIloginStart(email) {
@@ -50,7 +52,27 @@ export async function APIsignup(email, salt, authKey) {
     }    
     return response.json();
   }
-export async function APIcreateEntry(jwt, title, ciphertext, iv) { }  // POST /entry/new
+export async function APIcreateEntry(jwt, salt, title, unencryptedContent, masterPassword) {
+    const url = baseURL + "entry/new";
+    const encryptionKey = deriveEncryptionKey(masterPassword, salt);
+    const encryptedContent = await encryptEntry(encryptionKey, unencryptedContent);
+    const content = encryptedContent.ciphertext;
+    const iv = encryptedContent.iv;
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {'Authorization': 'Bearer '+jwt},
+        body: JSON.stringify({title, content, iv})
+    });
+
+    if (!response.ok) {
+        console.log("THROWING ERROR FROM API.JS")
+        throw new Error(`Response status: ${response.status}`);
+    }
+    return response.json();
+
+
+}
 export async function APIgetEntries(jwt) { 
     const url = baseURL + "entry/get";
 
@@ -64,4 +86,4 @@ export async function APIgetEntries(jwt) {
         throw new Error(`Response status: ${response.status}`);
     }
     return response.json();
-} 
+}
