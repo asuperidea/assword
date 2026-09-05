@@ -1,12 +1,11 @@
 import { APIgetEntries, APIcreateEntry } from './api.js';
-import { deriveAuthKey } from './crypto.js';
+import { deriveAuthKey, decryptEntry } from './crypto.js';
 
 async function createEntry(title, password, masterPassword){
     const jwt = sessionStorage.getItem("jwt");
     const salt = sessionStorage.getItem("salt");
     try {
         const response = await APIcreateEntry(jwt, salt, title, password, masterPassword);
-        console.log("entry logged!");
         return response;
     }catch (error) {
         console.log("CATCHING ERROR FROM VALUT.JS");
@@ -28,6 +27,9 @@ function displayEntries(entries){
     const area = document.getElementById("passwordArea");
     for (let i=0; i< entries.length; i++){
         const childDiv = document.createElement("div");
+
+        const decryptedContent = decryptEntry()
+
         childDiv.insertAdjacentHTML('beforeend', `
             <h2>${entries[i].title}</h2>
             <p>${entries[i].content}</p>`);
@@ -42,9 +44,12 @@ async function runEntries(){
 }
 async function runNewEntries(){
     const title = document.getElementById("entryTitle").value;
-    const content = document.getElementById("entryContent");
+    const content = document.getElementById("entryContent").value;
+    const master = document.getElementById("masterPassword").value;
+    
+    const response = createEntry(title, content, master);
 }
 runEntries();
 
 const button = document.getElementById("newEntryButton");
-button.addEventListener("click", runSignUp);
+button.addEventListener("click", runNewEntries);

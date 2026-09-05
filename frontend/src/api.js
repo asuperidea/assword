@@ -61,12 +61,12 @@ export async function APIcreateEntry(jwt, salt, title, unencryptedContent, maste
 
     const response = await fetch(url, {
         method: 'POST',
-        headers: {'Authorization': 'Bearer '+jwt},
+        headers: {'Authorization': 'Bearer '+jwt, 'Content-Type': 'application/json'},
         body: JSON.stringify({title, content, iv})
     });
 
     if (!response.ok) {
-        console.log("THROWING ERROR FROM API.JS")
+        console.log("THROWING ERROR FROM API.JS");
         throw new Error(`Response status: ${response.status}`);
     }
     return response.json();
