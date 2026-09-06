@@ -46,7 +46,7 @@ async function runLogin() {
                 <h2>Login Success</h2>
             </div>
         `);
-        window.location.href = "vault.html";
+        window.location.href = "vault";
     } 
     catch (error) {
         console.log("CATCHING ERROR FROM LOGIN.JS");

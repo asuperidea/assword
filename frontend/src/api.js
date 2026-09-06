@@ -52,10 +52,8 @@ export async function APIsignup(email, salt, authKey) {
     }    
     return response.json();
   }
-export async function APIcreateEntry(jwt, salt, title, unencryptedContent, masterPassword) {
+export async function APIcreateEntry(jwt, title, encryptedContent) {
     const url = baseURL + "entry/new";
-    const encryptionKey = deriveEncryptionKey(masterPassword, salt);
-    const encryptedContent = await encryptEntry(encryptionKey, unencryptedContent);
     const content = encryptedContent.ciphertext;
     const iv = encryptedContent.iv;
 

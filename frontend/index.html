@@ -11,44 +11,55 @@
     <title>Assword</title>
 </head>
 <body>
-    <section id="landing">
+    <section id="landingView">
         <div class="hero mt-5 mx-auto">
             <h1 class="semi text-center" style="font-size:2.2rem;">Your Passwords On</h1>
             <h1 class="bold text-center" style="font-size:3.4rem;"><i>My</i> Computer</h1>
             <p class="reg text-center mt-2">But It's Encrypted, Don't Worry</p>
         </div>
         <div class="buttons d-flex justify-content-center mt-5 gap-5">
-            <button id="signUpButton" class="in-btn">Sign Up</button>
-            <button id="logInButton" class="in-btn">Log In</button>
+            <button id="toSignUp" class="in-btn">Sign Up</button>
+            <button id="toLogIn" class="in-btn">Log In</button>
         </div>
     </section>
 
-    
-    <section id="signup">
+
+    <section id="signupView">
         <div class="hero mt-5 mx-auto">
             <h2 class="reg fs-2">Sign Up</h2>
-            <p class="reg text-center mt-2">Already Have An Account?<button class="txt-btn underline-slide" id="logInButton">Log In</button></p>
+            <p class="reg text-center mt-2">Already Have An Account?<button class="txt-btn underline-slide" id="toLogIn">Log In</button></p>
         </div>
         <div id="signUpErrorBox"></div>
         <div class="inputs d-flex flex-column mt-2 gap-1">
             <input id="email" placeholder="E-Mail" class="mx-auto">
             <input id="masterPassword" placeholder="Password" class="mx-auto">
         </div>
-        <button class="in-btn d-block mx-auto mt-3">Sign Up</button>
+        <button class="in-btn d-block mx-auto mt-3" id="startSignUp">Sign Up</button>
     </section>
 
 
-    <section id="signup">
+    <section id="loginView">
         <div class="hero mt-5 mx-auto">
-            <h2 class="reg fs-2">Sign Up</h2>
-            <p class="reg text-center mt-2">Already Have An Account?<button class="txt-btn underline-slide" id="logInButton">Log In</button></p>
+            <h2 class="reg fs-2">Log In</h2>
+            <p class="reg text-center mt-2">Don't Have An Account?<button class="txt-btn underline-slide" id="toSignUp">Sign Up</button></p>
         </div>
-        <div id="signUpErrorBox"></div>
+        <div id="logInErrorBox"></div>
         <div class="inputs d-flex flex-column mt-2 gap-1">
-            <input id="email" placeholder="E-Mail" class="mx-auto">
-            <input id="masterPassword" placeholder="Password" class="mx-auto">
+            <input id="loginemail" placeholder="E-Mail" class="mx-auto">
+            <input id="loginmasterPassword" placeholder="Master Password" class="mx-auto" type="password">
         </div>
-        <button class="in-btn d-block mx-auto mt-3">Sign Up</button>
+        <button class="in-btn d-block mx-auto mt-3" id="startLogIn">Log In</button>
     </section>
+
+    <section id="valutView">
+        <div class="hero mt-5 mx-auto">
+            <h2 class="reg fs-2">Your Passwords</h2>
+        </div>
+        <div id="passwordsBox">
+        </div>
+        <button class="in-btn d-block mx-auto" style="width: 10rem;">New Password</button>
+    </section>
+
+    <script type="module" src="src/app.js"></script>
 </body>
 </html>

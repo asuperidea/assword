@@ -1,11 +1,13 @@
 import { APIgetEntries, APIcreateEntry } from './api.js';
-import { deriveAuthKey, decryptEntry } from './crypto.js';
+import { deriveEncryptionKey, decryptEntry, encryptEntry } from './crypto.js';
 
-async function createEntry(title, password, masterPassword){
+async function createEntry(title, content, masterPassword){
     const jwt = sessionStorage.getItem("jwt");
     const salt = sessionStorage.getItem("salt");
+    const key = deriveEncryptionKey(masterPassword, salt);
+    const encrypted = await encryptEntry(key ,content);
     try {
-        const response = await APIcreateEntry(jwt, salt, title, password, masterPassword);
+        const response = await APIcreateEntry(jwt, title, encrypted);
         return response;
     }catch (error) {
         console.log("CATCHING ERROR FROM VALUT.JS");
@@ -39,6 +41,7 @@ function displayEntries(entries){
 }
 
 async function runEntries(){
+    const key = deriveEncryptionKey(masterPassword, sessionStorage.getItem("salt"));
     const entries = await getEntries();
     displayEntries(entries);
 }
