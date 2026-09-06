@@ -1,55 +1,45 @@
 import { deriveAuthKey, generateSalt } from './crypto.js';
 import { APIsignup } from './api.js';
+import { showView } from "./app.js";
 
 function evalPassword(password) {
     if (password.length < 10 || password.length > 100) {
-        return {"accept": false, "reason": "Password Must be more then 10 characters, less then 100"};
+        console.log("THROWING ERROR FROM SIGNUP.JS");
+        throw new Error();
     } else {
         return {"accept": true, "reason": null};
     }
 }
 
-async function signUp(masterPassword, email) {
-    const passwordEval = evalPassword(masterPassword);
-    if (!passwordEval.accept) {
-        console.log("THROWING ERROR FROM SIGNUP.JS");
-        throw new Error('Response status: Password must be more then ten characters, less then 100');
-    }
-
+document.getElementById("startSignUp").addEventListener("click", async() => {
+    console.log("started");
+    const area = document.getElementById("signUpErrorBox");
+    const email = document.getElementById("signup-email").value;
+    const master = document.getElementById("signup-password").value;
     const salt = generateSalt();
-    const authKey = deriveAuthKey(masterPassword, salt);
-
-    const response = await APIsignup(email, salt, authKey);
-    return response;
-}
-
-async function runSignUp() {
-    sessionStorage.clear();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const area = document.getElementById('area');
-
-    try {
-        const response = await signUp(password, email);
-
-        area.innerHTML = '';
-        area.insertAdjacentHTML('beforeend', `
-            <div style="width=100%; height: 4rem; background-color: rgb(0,255,0, 50)">
-                <h2>Signup Successful</h2>
-                <a href="login.html"><button>Log In</button></a>
-            </div>
-        `);
-        return response;
-    } catch (error) {
+    const authKey = deriveAuthKey(master, salt);
+    try{
+        console.log("testing word");
+        console.log(evalPassword(master));
+    } catch(error) {
         console.log("CATCHING ERROR FROM SIGNUP.JS");
-        area.innerHTML = '';
+        area.innerHTML='';
         area.insertAdjacentHTML('beforeend', `
-            <div style="width=100%; height: 4rem; background-color: rgb(255,0,0, 50)">
-                <h2>Signup Failed</h2>
-            </div>
-        `);
+            <h2 class="bold fs-5">Password Issue!</h2>
+            <p class="reg">Your password must be between 10 and 100 characters!</p>`)
+        return "error";
     }
-}
-
-const button = document.getElementById("startSignUp");
-button.addEventListener("click", runSignUp);
+    try {
+        console.log("calling api");
+        const response = await APIsignup(email, salt, authKey);
+        area.innerHTML='';
+        area.insertAdjacentHTML('beforeend', `
+            <h2 class="bold fs-5">Sign Up Successful!</h2>
+            <button class="txt-btn underline-slide" id="toLogIn">Log In</button>`)
+    } catch(error) {
+        area.innerHTML='';
+        area.insertAdjacentHTML('beforeend', `
+            <h2 class="bold fs-5">Sign Up Error!</h2>
+            <p class="reg">An error occured during your signup process. The email you used may already be in use.</p>`)
+    }
+});

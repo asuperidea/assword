@@ -1,4 +1,9 @@
-function showView(viewName) {
+import "./signup.js";
+import "./login.js";
+import "./valut.js";
+
+export function showView(viewName) {
+    console.log(viewName);
     document.querySelectorAll("section").forEach(section => {
         section.style.display = "none";
     });
@@ -16,10 +21,11 @@ document.querySelectorAll("#toLogIn").forEach(button => {
     button.addEventListener("click", () => showView("login"));
 });
 
-if (sessionStorage.getItem("jwt")) {
-    showView("landing");
-    // init valut!!
-}
-else {
-    showView("landing");
+
+const initializeView = () => showView("landing");
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeView, { once: true });
+} else {
+    initializeView();
 }

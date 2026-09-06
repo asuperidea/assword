@@ -19,8 +19,7 @@ async function loginValidate(email, salt, password) {
     try {
         const authKey = deriveAuthKey(password, salt);
         const response = await APIloginValidate(email, authKey);
-        return response;
-        
+        return response; 
     } 
     catch (error) {
         console.log("CATCHING ERROR FROM LOGIN.JS");
@@ -28,7 +27,7 @@ async function loginValidate(email, salt, password) {
     }
 }
 
-async function runLogin() {
+export async function runLogin() {
     sessionStorage.clear();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -60,6 +59,3 @@ async function runLogin() {
         `);
     }
 }
-
-const button = document.getElementById("startLogIn");
-button.addEventListener("click", runLogin);

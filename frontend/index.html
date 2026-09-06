@@ -29,10 +29,11 @@
             <h2 class="reg fs-2">Sign Up</h2>
             <p class="reg text-center mt-2">Already Have An Account?<button class="txt-btn underline-slide" id="toLogIn">Log In</button></p>
         </div>
-        <div id="signUpErrorBox"></div>
+        <div id="signUpErrorBox" class="d-flex mx-auto flex-column align-items-center">
+        </div>
         <div class="inputs d-flex flex-column mt-2 gap-1">
-            <input id="email" placeholder="E-Mail" class="mx-auto">
-            <input id="masterPassword" placeholder="Password" class="mx-auto">
+            <input id="signup-email" placeholder="E-Mail" class="mx-auto">
+            <input id="signup-password" placeholder="Password" class="mx-auto">
         </div>
         <button class="in-btn d-block mx-auto mt-3" id="startSignUp">Sign Up</button>
     </section>
@@ -53,7 +54,7 @@
 
     <section id="valutView">
         <div class="hero mt-5 mx-auto">
-            <h2 class="reg fs-2">Your Passwords</h2>
+            <h1 class="reg fs-2">Your Passwords</h1>
         </div>
         <div id="passwordsBox">
         </div>

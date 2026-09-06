@@ -40,19 +40,15 @@ function displayEntries(entries){
     }
 }
 
-async function runEntries(){
+export async function runEntries(){
     const key = deriveEncryptionKey(masterPassword, sessionStorage.getItem("salt"));
     const entries = await getEntries();
     displayEntries(entries);
 }
-async function runNewEntries(){
+export async function runNewEntries(){
     const title = document.getElementById("entryTitle").value;
     const content = document.getElementById("entryContent").value;
     const master = document.getElementById("masterPassword").value;
     
     const response = createEntry(title, content, master);
 }
-runEntries();
-
-const button = document.getElementById("newEntryButton");
-button.addEventListener("click", runNewEntries);
