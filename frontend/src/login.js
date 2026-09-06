@@ -1,5 +1,34 @@
 import { APIloginStart, APIloginValidate } from './api.js';
 import { deriveAuthKey } from './crypto.js';
+import { showView } from "./app.js";
+
+document.getElementById("startLogIn").addEventListener("click", async() => {
+    const email = document.getElementById("login-email").value;
+    const master = document.getElementById("login-password").value;
+    const area = document.getElementById("logInErrorBox");
+
+    try {
+        if (email.length==0 || master.length==0){
+            throw new error();
+        }
+
+        const salt = await APIloginStart(email);
+        const authKey = deriveAuthKey(master, salt);
+        sessionStorage.setItem("salt", salt);
+        sessionStorage.setItem("email", email);
+        
+        const jwt = await APIloginValidate(email, authKey);
+        sessionStorage.setItem("jwt", jwt);
+
+        showView("valut");
+    } catch(error){
+        area.innerHTML="";
+        area.insertAdjacentHTML('beforeend', `
+            <h2 class="bold fs-5">Log In Error!</h2>
+            <p class="reg text-center">We couldn't validate your login. Check for typos and try again. If you don't have an account sign up!</p>`);
+    }
+
+});
 
 async function loginStart(email) {
     try {

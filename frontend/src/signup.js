@@ -1,6 +1,5 @@
 import { deriveAuthKey, generateSalt } from './crypto.js';
 import { APIsignup } from './api.js';
-import { showView } from "./app.js";
 
 function evalPassword(password) {
     if (password.length < 10 || password.length > 100) {
