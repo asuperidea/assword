@@ -1,0 +1,77 @@
+@use "sass:list";
+@use "sass:color";
+
+$font-stack: Inconsolata, monospace;
+
+$dark: #0D1B1E;
+$light: #F6EFEE;
+$coral: #EC7357;
+$teal: #48A9A6;
+$darkteal: #183837;
+
+body {
+    background-color: $light !important;
+}
+input {
+    width: 50%;
+    border-radius: 2px;
+    background-color: $light;
+    color: $darkteal;
+    border: 1px solid $teal;
+}
+
+.light{
+  font-family: $font-stack;
+  font-weight: 300;
+}
+.reg{
+  font-family: $font-stack;
+  font-weight: 400;
+}
+.med{
+  font-family: $font-stack;
+  font-weight: 500;
+}
+.semi{
+  font-family: $font-stack;
+  font-weight: 600;
+}
+.bold{
+  font-family: $font-stack;
+  font-weight: 700;
+}
+
+.hero{
+    width: 95%;
+    max-width: 50rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.buttons{
+}
+.in-btn {
+    background-color: $light;
+    width: 6rem;
+    height: 2.4rem;
+    transition: all .2s;
+    border-radius: 2rem;
+    border: 1px solid $teal;
+
+    &:hover {
+        border: 1px solid $coral !important;
+    }
+    &:active {
+        background-color: $coral;
+    }
+}
+.txt-btn{
+    background-color: $light;
+    border: none;
+    text-decoration: underline;
+    transition: all .2s;
+
+    &:hover {
+        color: $coral;
+    }
+}

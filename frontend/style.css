@@ -1,0 +1,69 @@
+body {
+  background-color: #F6EFEE !important;
+}
+
+input {
+  width: 50%;
+  border-radius: 2px;
+  background-color: #F6EFEE;
+  color: #183837;
+  border: 1px solid #48A9A6;
+}
+
+.light {
+  font-family: Inconsolata, monospace;
+  font-weight: 300;
+}
+
+.reg {
+  font-family: Inconsolata, monospace;
+  font-weight: 400;
+}
+
+.med {
+  font-family: Inconsolata, monospace;
+  font-weight: 500;
+}
+
+.semi {
+  font-family: Inconsolata, monospace;
+  font-weight: 600;
+}
+
+.bold {
+  font-family: Inconsolata, monospace;
+  font-weight: 700;
+}
+
+.hero {
+  width: 95%;
+  max-width: 50rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.in-btn {
+  background-color: #F6EFEE;
+  width: 6rem;
+  height: 2.4rem;
+  transition: all 0.2s;
+  border-radius: 2rem;
+  border: 1px solid #48A9A6;
+}
+.in-btn:hover {
+  border: 1px solid #EC7357 !important;
+}
+.in-btn:active {
+  background-color: #EC7357;
+}
+
+.txt-btn {
+  background-color: #F6EFEE;
+  border: none;
+  text-decoration: underline;
+  transition: all 0.2s;
+}
+.txt-btn:hover {
+  color: #EC7357;
+}/*# sourceMappingURL=style.css.map */
