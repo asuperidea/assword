@@ -1,6 +1,7 @@
 import { APIloginStart, APIloginValidate } from './api.js';
-import { deriveAuthKey } from './crypto.js';
+import { deriveAuthKey, deriveEncryptionKey } from './crypto.js';
 import { showView } from "./app.js";
+import { setEncryptionKey } from "./shared.js";
 
 document.getElementById("startLogIn").addEventListener("click", async() => {
     const email = document.getElementById("login-email").value;
@@ -21,6 +22,8 @@ document.getElementById("startLogIn").addEventListener("click", async() => {
         sessionStorage.setItem("jwt", jwt);
 
         showView("valut");
+        setEncryptionKey(deriveEncryptionKey(master, salt));
+        window.location.reload()
     } catch(error){
         area.innerHTML="";
         area.insertAdjacentHTML('beforeend', `

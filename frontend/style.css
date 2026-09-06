@@ -2,12 +2,19 @@ body {
   background-color: #F6EFEE !important;
 }
 
-input {
+.input1 {
   width: 50%;
   border-radius: 2px;
   background-color: #F6EFEE;
   color: #183837;
   border: 1px solid #48A9A6;
+}
+
+.input2 {
+  width: 70%;
+  background-color: #0D1B1E;
+  border: 1px solid #EC7357;
+  color: #F6EFEE;
 }
 
 .light {
@@ -33,6 +40,10 @@ input {
 .bold {
   font-family: Inconsolata, monospace;
   font-weight: 700;
+}
+
+.coral {
+  color: #EC7357;
 }
 
 .hero {
@@ -66,4 +77,31 @@ input {
 }
 .txt-btn:hover {
   color: #EC7357;
+}
+
+.dark-btn {
+  background-color: #0D1B1E;
+  color: #F6EFEE;
+  width: 12rem;
+  height: 2.4rem;
+  transition: all 0.2s;
+  border-radius: 2rem;
+  border: 1px solid #EC7357;
+}
+.dark-btn:hover {
+  border: 1px solid #48A9A6 !important;
+}
+.dark-btn:active {
+  background-color: #48A9A6;
+}
+
+.newEntryBox {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #0D1B1E;
+  border-radius: 1rem;
+  width: 80%;
+  min-height: 30rem;
 }/*# sourceMappingURL=style.css.map */

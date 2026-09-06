@@ -32,8 +32,8 @@
         <div id="signUpErrorBox" class="d-flex mx-auto flex-column align-items-center">
         </div>
         <div class="inputs d-flex flex-column mt-2 gap-1">
-            <input id="signup-email" placeholder="E-Mail" class="mx-auto">
-            <input id="signup-password" placeholder="Password" class="mx-auto">
+            <input id="signup-email" placeholder="E-Mail" class="input1 mx-auto">
+            <input id="signup-password" placeholder="Password" class="input1 mx-auto">
         </div>
         <button class="in-btn d-block mx-auto mt-3" id="startSignUp">Sign Up</button>
     </section>
@@ -46,8 +46,8 @@
         </div>
         <div id="logInErrorBox" class="d-flex mx-auto flex-column align-items-center"></div>
         <div class="inputs d-flex flex-column mt-2 gap-1">
-            <input id="login-email" placeholder="E-Mail" class="mx-auto">
-            <input id="login-password" placeholder="Master Password" class="mx-auto" type="password">
+            <input id="login-email" placeholder="E-Mail" class="input1 mx-auto">
+            <input id="login-password" placeholder="Master Password" class="input1 mx-auto" type="password">
         </div>
         <button class="in-btn d-block mx-auto mt-3" id="startLogIn">Log In</button>
     </section>
@@ -56,9 +56,19 @@
         <div class="hero mt-5 mx-auto">
             <h1 class="reg fs-2">Your Passwords</h1>
         </div>
-        <div id="passwordsBox">
+        <div id="valutErrorBox"></div>
+        <div id="passwordsBox"></div>
+        <button id="startNewPassword" class="in-btn d-block mx-auto" style="width: 10rem;">New Password</button>
+    </section>
+    <section id="newEntryView">
+        <div class="newEntryBox">
+            <h1 class="fs-2 mt-3 text-center coral">New Password</h1>
+            <input id="title" placeholder="Password Name" class="input2 mx-auto">
+            <input id="content" placeholder="Password" type="password" class="input2 mx-auto">
+            <button id="newEntryButton" class="dark-btn mx-auto mt-5">Create Password</button>
+            <div id="newEntryErrorBox"></div>
+            <p class="fs-6 coral mt-auto text-center">Never Enter Private Info Inot The "Password Name" Input. All Passwords Are Encrypted In Browser.</p>
         </div>
-        <button class="in-btn d-block mx-auto" style="width: 10rem;">New Password</button>
     </section>
 
     <script type="module" src="src/app.js"></script>

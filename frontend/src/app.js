@@ -21,11 +21,8 @@ document.querySelectorAll("#toLogIn").forEach(button => {
     button.addEventListener("click", () => showView("login"));
 });
 
-
-const initializeView = () => showView("landing");
-
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initializeView, { once: true });
+if (sessionStorage.getItem("jwt")){
+    showView("valut");
 } else {
-    initializeView();
+    showView("landing");
 }

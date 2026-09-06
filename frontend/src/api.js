@@ -1,6 +1,6 @@
 import { encryptEntry, deriveEncryptionKey } from './crypto.js';
 
-const baseURL = "https://assword-backend.simoncrystal.dev/"
+const ba;seURL = "https://assword-backend.simoncrystal.dev/"
 
 export async function APIloginStart(email) {
     const url = baseURL + "login/start?userEmail=" + encodeURIComponent(email);
