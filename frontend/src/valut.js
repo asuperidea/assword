@@ -15,9 +15,10 @@ try {
         const decryptedContent = await decryptEntry(encryptionKey, entries[i].content, entries[i].iv);
 
         childDiv.insertAdjacentHTML('beforeend', `
-            <h2>${entries[i].title}</h2>
+            <h2 class="semi fs-3">${entries[i].title}</h2>
             <p>${decryptedContent}</p>`);
         childDiv.id=`passwordDiv${i}`;
+        childDiv.classList.add("password");
         passArea.appendChild(childDiv);
     }
     if (entries.length == 0){

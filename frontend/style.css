@@ -104,4 +104,17 @@ body {
   border-radius: 1rem;
   width: 80%;
   min-height: 30rem;
+}
+
+.passwordsBox {
+  height: auto;
+  display: grid;
+  grid-template-rows: 5rem;
+  grid-auto-rows: 15rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+.password {
+  outline: 1px solid #EC7357;
 }/*# sourceMappingURL=style.css.map */
