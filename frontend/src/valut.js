@@ -12,7 +12,7 @@ try {
     const entries = await APIgetEntries(jwt);
     for (let i=0; i< entries.length; i++){
         const childDiv = document.createElement("div");
-        const decryptedContent = decryptEntry(encryptionKey, entries[i].content, entries[i].iv);
+        const decryptedContent = await decryptEntry(encryptionKey, entries[i].content, entries[i].iv);
 
         childDiv.insertAdjacentHTML('beforeend', `
             <h2>${entries[i].title}</h2>
@@ -33,21 +33,27 @@ try {
 }
 
 document.getElementById("startNewPassword").addEventListener("click", async() => {
-    showView("valutView");
+    showView("newEntry");
 });
 
 document.getElementById("newEntryButton").addEventListener("click", async() => {
     const title = document.getElementById("title").value;
     const unencrypted = document.getElementById("content").value;
     const jwt = sessionStorage.getItem("jwt");
+    const area = document.getElementById("newEntryErrorBox");
 
     const encrypted = await encryptEntry(encryptionKey, unencrypted);
 
     try {
-        const response = await APIcreateEntry(jwt, title, encrypted);
-        
+        evalContent(title);
+        evalContent(evalContent);
+        await APIcreateEntry(jwt, title, encrypted);
+        showView("valut");
+        window.location.reload();
     }catch (error) {
         console.log("CATCHING ERROR FROM VALUT.JS");
+        area.innerHTML = '';
+        area.append
     }
 });
 
@@ -61,5 +67,17 @@ async function createEntry(title, content, masterPassword){
         return response;
     }catch (error) {
         console.log("CATCHING ERROR FROM VALUT.JS");
+    }
+}
+
+
+
+
+function evalContent(content) {
+    if (content.length <= 0) {
+        console.log("THROWING ERROR FROM SIGNUP.JS");
+        throw new Error();
+    } else {
+        return true;
     }
 }
