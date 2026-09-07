@@ -70,13 +70,13 @@ body {
 }
 
 .txt-btn {
-  background-color: #F6EFEE;
+  background-color: rgba(0, 0, 0, 0);
   border: none;
   text-decoration: underline;
   transition: all 0.2s;
 }
 .txt-btn:hover {
-  color: #EC7357;
+  color: #48A9A6;
 }
 
 .dark-btn {
@@ -119,8 +119,13 @@ body {
 
 .password {
   display: flex;
+  max-width: 1fr;
+  min-width: 15rem;
   flex-direction: column;
   align-items: center;
-  outline: 1px solid #EC7357;
-  height: 7rem;
+  min-height: 7rem;
+  max-height: 10rem;
+  background-color: #EC7357;
+  outline: 1px solid #0D1B1E;
+  word-break: break-all;
 }/*# sourceMappingURL=style.css.map */

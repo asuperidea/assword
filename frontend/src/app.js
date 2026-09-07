@@ -20,6 +20,15 @@ document.querySelectorAll("#toSignUp").forEach(button => {
 document.querySelectorAll("#toLogIn").forEach(button => {
     button.addEventListener("click", () => showView("login"));
 });
+document.querySelectorAll("#toValut").forEach(button => {
+    button.addEventListener("click", () => showView("valut"));
+});
+document.querySelectorAll("#ridJWT").forEach(button => {
+    button.addEventListener("click", () => {
+        sessionStorage.removeItem("jwt");
+        window.location.reload();
+    });
+});
 
 if (sessionStorage.getItem("jwt")){
     showView("valut");
