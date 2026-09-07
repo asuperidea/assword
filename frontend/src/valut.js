@@ -28,7 +28,7 @@ try {
     console.log("CATCHING ERROR FROM VALUT.JS");
     area.innerHTML='';
     area.insertAdjacentHTML('beforeend', `
-        <h2Session Expired!</h2>
+        <h2>Session Expired!</h2>
         <p class="reg text-center">Your Session Has Expired. Please <button class="txt-btn underline-slide" id="toLogIn">Log In Again</button></p>`);
 }
 
@@ -53,8 +53,10 @@ document.getElementById("newEntryButton").addEventListener("click", async() => {
     }catch (error) {
         console.log("CATCHING ERROR FROM VALUT.JS");
         area.innerHTML = '';
-        area.append
-    }
+        area.insertAdjacentHTML('beforeend', `
+            <h2 class='semi coral'>Error!</h2>
+            <p class='reg coral'>An error occured while processing your password. Make sure every box is filled out.</p>`
+        )};
 });
 
 async function createEntry(title, content, masterPassword){
@@ -75,7 +77,7 @@ async function createEntry(title, content, masterPassword){
 
 function evalContent(content) {
     if (content.length <= 0) {
-        console.log("THROWING ERROR FROM SIGNUP.JS");
+        console.log("THROWING ERROR FROM VALUT.JS");
         throw new Error();
     } else {
         return true;
