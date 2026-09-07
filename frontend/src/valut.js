@@ -16,9 +16,15 @@ try {
 
         childDiv.insertAdjacentHTML('beforeend', `
             <h2 class="semi fs-3">${entries[i].title}</h2>
-            <p>${decryptedContent}</p>`);
+            <button type="button" class="txt-btn toggle-password">Show</button>
+            <p class="password-content" hidden>${decryptedContent}</p>`);
         childDiv.id=`passwordDiv${i}`;
         childDiv.classList.add("password");
+        childDiv.querySelector(".toggle-password").addEventListener("click", (event) => {
+            const content = childDiv.querySelector(".password-content");
+            content.hidden = !content.hidden;
+            event.currentTarget.textContent = content.hidden ? "Show" : "Hide";
+        });
         passArea.appendChild(childDiv);
     }
     if (entries.length == 0){

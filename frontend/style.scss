@@ -113,12 +113,18 @@ body {
 
 .passwordsBox{
     height: auto;
+    width: 95%;
+    margin: auto;
     display: grid;
-    grid-template-rows: 5rem;
+    grid-template-rows: 7rem;
     grid-auto-rows: 15rem;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: 1rem;
 }
 .password{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     outline: 1px solid $coral;
+    height: 7rem;
 }
