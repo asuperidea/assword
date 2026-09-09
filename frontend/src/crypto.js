@@ -1,11 +1,41 @@
-export function deriveAuthKey(masterPassword, salt) {
-  const authKey = masterPassword + salt + "AUTHKEY";
-  return authKey;
+export async function deriveAuthKey(masterPassword, salt) {
+    const enc = new TextEncoder();
+    const keyMaterial = await window.crypto.subtle.importKey(
+      "raw", enc.encode(masterPassword+salt+"AUTHKEY"), { name: "PBKDF2" }, false, ["deriveBits"]
+    );
+  
+    const derivada = await window.crypto.subtle.deriveBits(
+      {
+        name: "PBKDF2",
+        salt: enc.encode(salt),
+        iterations: 600000,
+        hash: "SHA-256"
+      },
+      keyMaterial,
+      256
+    );
+  
+    return new Uint8Array(derivada);
 }
 
-export function deriveEncryptionKey(masterPassword, salt) {
-  const encryptionKey = masterPassword + salt + "ENCRYPTIONKEY"
-  return encryptionKey;
+export async function deriveEncryptionKey(masterPassword, salt) {
+    const enc = new TextEncoder();
+    const keyMaterial = await window.crypto.subtle.importKey(
+      "raw", enc.encode(masterPassword+salt+"ENCRYPTIONKEY"), { name: "PBKDF2" }, false, ["deriveBits"]
+    );
+  
+    const derivada = await window.crypto.subtle.deriveBits(
+      {
+        name: "PBKDF2",
+        salt: enc.encode(salt),
+        iterations: 600000,
+        hash: "SHA-256"
+      },
+      keyMaterial,
+      256
+    );
+  
+    return new Uint8Array(derivada);
 }
 
 export async function encryptEntry(encryptionKey, plainText) {

@@ -118,7 +118,6 @@ def loginValidate(userEmail:str, userAuth:str, db:Session = Depends(get_db_users
     if not user:
         raise HTTPException(status_code=400, detail="Invalid email or authkey")
     hash = bcrypt.checkpw(userAuth.encode(), user.authKey.encode())
-    print(hash)
     if hash:
         return createJWT(JWT_KEY, "Log In Validation", user.userId, user.email)
     else:
