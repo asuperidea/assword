@@ -22,12 +22,13 @@ Base.metadata.create_all(engineEntries)
 bearer_scheme = HTTPBearer()
 
 origins = [
-    "https://assword.simoncrystal.dev"
+    "https://assword.simoncrystal.dev",
+    "http://localhost:5500"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5500", "https://assword.simoncrystal.dev"],
+    allow_origins=origins,
     allow_methods=["*"],
     allow_headers=["*"],
     allow_credentials=True,
