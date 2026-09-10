@@ -1,6 +1,9 @@
 backend/node_modules
-backend/.db
 backend/__pycache__
-.DS_Store
 *.db
+
+frontend/style.css.map
+
+.DS_Store
+.venv
 .env
