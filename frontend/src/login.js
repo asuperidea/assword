@@ -14,7 +14,7 @@ document.getElementById("startLogIn").addEventListener("click", async() => {
         }
 
         const salt = await APIloginStart(email);
-        const authKey = deriveAuthKey(master, salt);
+        const authKey = await deriveAuthKey(master, salt);
         sessionStorage.setItem("salt", salt);
         sessionStorage.setItem("email", email);
         
@@ -22,7 +22,7 @@ document.getElementById("startLogIn").addEventListener("click", async() => {
         sessionStorage.setItem("jwt", jwt);
 
         showView("valut");
-        setEncryptionKey(deriveEncryptionKey(master, salt));
+        setEncryptionKey(await deriveEncryptionKey(master, salt));
         window.location.reload()
     } catch(error){
         area.innerHTML="";
@@ -49,7 +49,7 @@ async function loginStart(email) {
 
 async function loginValidate(email, salt, password) {
     try {
-        const authKey = deriveAuthKey(password, salt);
+        const authKey = await deriveAuthKey(password, salt);
         const response = await APIloginValidate(email, authKey);
         return response; 
     } 

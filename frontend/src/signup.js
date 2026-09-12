@@ -16,7 +16,7 @@ document.getElementById("startSignUp").addEventListener("click", async() => {
     const email = document.getElementById("signup-email").value;
     const master = document.getElementById("signup-password").value;
     const salt = generateSalt();
-    const authKey = deriveAuthKey(master, salt);
+    const authKey = await deriveAuthKey(master, salt);
     try{
         console.log("testing word");
         console.log(evalPassword(master));
@@ -30,7 +30,7 @@ document.getElementById("startSignUp").addEventListener("click", async() => {
     }
     try {
         console.log("calling api");
-        const response = await APIsignup(email, salt, authKey);
+        await APIsignup(email, salt, authKey);
         area.innerHTML='';
         area.insertAdjacentHTML('beforeend', `
             <h2 class="bold fs-5">Sign Up Successful!</h2>

@@ -15,7 +15,7 @@ export async function deriveAuthKey(masterPassword, salt) {
       256
     );
   
-    return new Uint8Array(derivada);
+    return btoa(String.fromCharCode(...new Uint8Array(derivada)));
 }
 
 export async function deriveEncryptionKey(masterPassword, salt) {
@@ -35,7 +35,7 @@ export async function deriveEncryptionKey(masterPassword, salt) {
       256
     );
   
-    return new Uint8Array(derivada);
+    return btoa(String.fromCharCode(...new Uint8Array(derivada)));
 }
 
 export async function encryptEntry(encryptionKey, plainText) {
