@@ -12,6 +12,16 @@ $darkteal: #183837;
 body {
     background-color: $light !important;
 }
+html a {
+    color: $dark;
+
+    &:hover {
+        color: $coral;
+    }
+    &:active {
+        color: $teal;
+    }
+}
 .input1 {
     width: 50%;
     border-radius: 2px;
@@ -132,4 +142,9 @@ body {
     background-color: $coral;
     outline: 1px solid $dark;
     word-break: break-all;
+}
+.about {
+    margin-top: 9rem;
+    width: 90%;
+    max-width: 30rem;
 }

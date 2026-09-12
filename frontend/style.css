@@ -2,6 +2,16 @@ body {
   background-color: #F6EFEE !important;
 }
 
+html a {
+  color: #0D1B1E;
+}
+html a:hover {
+  color: #EC7357;
+}
+html a:active {
+  color: #48A9A6;
+}
+
 .input1 {
   width: 50%;
   border-radius: 2px;
@@ -128,4 +138,10 @@ body {
   background-color: #EC7357;
   outline: 1px solid #0D1B1E;
   word-break: break-all;
+}
+
+.about {
+  margin-top: 9rem;
+  width: 90%;
+  max-width: 30rem;
 }/*# sourceMappingURL=style.css.map */
