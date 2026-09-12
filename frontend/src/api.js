@@ -1,3 +1,5 @@
+import { encryptEntry, deriveEncryptionKey } from './crypto.js';
+
 const baseURL = "https://assword-backend.simoncrystal.dev/"
 
 export async function APIloginStart(email) {
@@ -19,10 +21,10 @@ export async function APIloginStart(email) {
 
 export async function APIloginValidate(email, authKey) {
     const url = baseURL + "login/validate" + 
-    "?userEmail=" + 
-    encodeURIComponent(email) + 
-    "&userAuth=" +
-    authKey;
+    "?userEmail="+ 
+    encodeURIComponent(email)+ 
+    "&userAuth="+
+    encodeURIComponent(authKey);
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -30,6 +32,9 @@ export async function APIloginValidate(email, authKey) {
         throw new Error(`Response status: ${response.status}`);
     }
     const data = response.json();
+
+    sessionStorage.setItem("jwt", data);
+    
     return data;
 }
 
@@ -47,7 +52,36 @@ export async function APIsignup(email, salt, authKey) {
     }    
     return response.json();
   }
-export async function APIcreateEntry(jwt, title, ciphertext, iv) { }  // POST /entry/new
-export async function APIgetEntries(jwt) { } 
+export async function APIcreateEntry(jwt, title, encryptedContent) {
+    const url = baseURL + "entry/new";
+    const content = encryptedContent.ciphertext;
+    const iv = encryptedContent.iv;
 
-console.log(await APIloginValidate("test1@test.com", "AUTHKEY1"));
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {'Authorization': 'Bearer '+jwt, 'Content-Type': 'application/json'},
+        body: JSON.stringify({title, content, iv})
+    });
+
+    if (!response.ok) {
+        console.log("THROWING ERROR FROM API.JS");
+        throw new Error(`Response status: ${response.status}`);
+    }
+    return response.json();
+
+
+}
+export async function APIgetEntries(jwt) { 
+    const url = baseURL + "entry/get";
+
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {'Authorization': 'Bearer '+jwt}
+    });
+
+    if (!response.ok) {
+        console.log("THROWING ERROR FROM API.JS")
+        throw new Error(`Response status: ${response.status}`);
+    }
+    return response.json();
+}

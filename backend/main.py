@@ -22,15 +22,16 @@ Base.metadata.create_all(engineEntries)
 bearer_scheme = HTTPBearer()
 
 origins = [
-    "https://assword.simoncrystal.dev"
+    "https://assword.simoncrystal.dev",
+    "http://localhost:5500"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=origins,
     allow_methods=["*"],
     allow_headers=["*"],
+    allow_credentials=True,
 )
 
 load_dotenv()
@@ -118,7 +119,6 @@ def loginValidate(userEmail:str, userAuth:str, db:Session = Depends(get_db_users
     if not user:
         raise HTTPException(status_code=400, detail="Invalid email or authkey")
     hash = bcrypt.checkpw(userAuth.encode(), user.authKey.encode())
-    print(hash)
     if hash:
         return createJWT(JWT_KEY, "Log In Validation", user.userId, user.email)
     else:
@@ -160,6 +160,6 @@ def getEntries(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme
         userEntries = db.query(Entries).filter(Entries.userId == id).all()
         return userEntries
     elif decodedJWT == "Expired Token":
-            raise HTTPException(status_code=400, detail="Expired JWT")
+        raise HTTPException(status_code=400, detail="Expired JWT")
     else:
         raise HTTPException(status_code=400, detail="Invalid JWT")

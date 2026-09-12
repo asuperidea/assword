@@ -3,11 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+    </style>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Assword</title>
 </head>
 <body>
-    <h1>Assword</h1>
-    <a href="signup.html"><button>signup</button></a>
-    <button>login</button>
+    <section id="landingView">
+        <div class="hero mt-5 mx-auto">
+            <h1 class="semi text-center" style="font-size:2.2rem;">Your Passwords On</h1>
+            <h1 class="bold text-center" style="font-size:3.4rem;"><i>My</i> Computer</h1>
+            <p class="reg text-center mt-2">But It's Encrypted, Don't Worry</p>
+            <a href="about.html"><p class="reg text-center mt2">Learn More</p></a>
+        </div>
+        <div class="buttons d-flex justify-content-center mt-5 gap-5">
+            <button id="toSignUp" class="in-btn">Sign Up</button>
+            <button id="toLogIn" class="in-btn">Log In</button>
+        </div>
+    </section>
+
+
+    <section id="signupView">
+        <div class="hero mt-5 mx-auto">
+            <h2 class="reg fs-2">Sign Up</h2>
+            <p class="reg text-center mt-2">Already Have An Account?<button class="txt-btn underline-slide" id="toLogIn">Log In</button></p>
+        </div>
+        <div id="signUpErrorBox" class="d-flex mx-auto flex-column align-items-center">
+        </div>
+        <div class="inputs d-flex flex-column mt-2 gap-1">
+            <input id="signup-email" placeholder="E-Mail" class="input1 mx-auto">
+            <input id="signup-password" placeholder="Password" class="input1 mx-auto">
+        </div>
+        <button class="in-btn d-block mx-auto mt-3" id="startSignUp">Sign Up</button>
+    </section>
+
+
+    <section id="loginView">
+        <div class="hero mt-5 mx-auto">
+            <h2 class="reg fs-2">Log In</h2>
+            <p class="reg text-center mt-2">Don't Have An Account?<button class="txt-btn underline-slide" id="toSignUp">Sign Up</button></p>
+        </div>
+        <div id="logInErrorBox" class="d-flex mx-auto flex-column align-items-center"></div>
+        <div class="inputs d-flex flex-column mt-2 gap-1">
+            <input id="login-email" placeholder="E-Mail" class="input1 mx-auto">
+            <input id="login-password" placeholder="Master Password" class="input1 mx-auto" type="password">
+        </div>
+        <button class="in-btn d-block mx-auto mt-3" id="startLogIn">Log In</button>
+    </section>
+
+    <section id="valutView">
+        <div class="hero mt-5 mx-auto">
+            <h1 class="reg fs-2">Your Passwords</h1>
+        </div>
+        <div id="valutErrorBox"></div>
+        <div id="passwordsBox" class="passwordsBox">
+        </div>
+        <button id="startNewPassword" class="in-btn d-block mx-auto" style="width: 10rem;">New Password</button>
+        <button id="ridJWT" class="txt-btn d-block mx-auto">Log Out</button>
+    </section>
+    <section id="newEntryView">
+        <div class="newEntryBox">
+            <h1 class="fs-2 mt-3 text-center coral">New Password</h1>
+            <input id="title" placeholder="Password Name" class="input2 mx-auto">
+            <input id="content" placeholder="Password" type="password" class="input2 mx-auto">
+            <button id="newEntryButton" class="dark-btn mx-auto mt-5">Create Password</button>
+            <button id="toValut" class="txt-btn coral mx-auto mt-1">Go Back</button>
+            <div id="newEntryErrorBox" class="d-flex flex-column align-items-center gap-2"></div>
+            <p class="fs-6 coral mt-auto text-center">Never Enter Private Info Into The "Password Name" Input. All Passwords Are Encrypted In Browser.</p>
+        </div>
+    </section>
+
+    <script type="module" src="src/app.js"></script>
 </body>
 </html>
