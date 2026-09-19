@@ -66,6 +66,10 @@ class EntryGet(BaseModel):
     username: str
     iv: str
 
+class entryDelete(BaseModel):
+    entryId: int
+    iv: str
+
 class EntryBase(BaseModel):
     entryId: int
     userId: int
