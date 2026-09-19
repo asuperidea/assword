@@ -117,6 +117,8 @@ def getEntries(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme
 def deleteEntry(body:entryDelete, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
     userid = validateJWT(credentials.credentials)
     entry = db.query(Entries).filter(Entries.entryId == body.entryId).first()
-
     if entry.userId == userid and entry.iv == body.iv:
-        
+        db.delete(entry)
+        db.commit()
+    else:
+        raise HTTPException(status_code=400, detail="Entry not deleted")
