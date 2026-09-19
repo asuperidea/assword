@@ -19,7 +19,7 @@ class Entries(Base):
     title = Column(String, nullable=False)
     website = Column(String)
     username = Column(String)
-    password = Column(String, nullable=False)
+    content = Column(String, nullable=False)
     iv = Column(String, nullable=False)
 
 # Models for function use (idk the term bro)
@@ -66,8 +66,16 @@ class EntryGet(BaseModel):
     username: str
     iv: str
 
-class entryDelete(BaseModel):
+class EntryDelete(BaseModel):
     entryId: int
+    iv: str
+
+class EntryChange(BaseModel):
+    entryId: int
+    title: str
+    content: str
+    website: str
+    username: str
     iv: str
 
 class EntryBase(BaseModel):

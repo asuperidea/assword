@@ -5,7 +5,7 @@ from typing import Annotated, List
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
-from models import Users, Entries, UserBase, UserPublic, UserCreate, UserSalt, EntryCreate, EntryGet, EntryBase, entryDelete
+from models import Users, Entries, UserBase, UserPublic, UserCreate, UserSalt, EntryCreate, EntryGet, EntryBase, EntryDelete, EntryChange
 from database import engineUsers, engineEntries, SessionUsers, SessionEntries, Base
 import os
 from dotenv import load_dotenv
@@ -113,12 +113,18 @@ def getEntries(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme
     userEntries = db.query(Entries).filter(Entries.userId == userid).all()
     return userEntries
 
+@app.get("/entry/change")
+def changeEntry(body:EntryChange, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
+    userid = validateJWT
+
+
 @app.delete("/entry/delete")
-def deleteEntry(body:entryDelete, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
+def deleteEntry(body:EntryDelete, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
     userid = validateJWT(credentials.credentials)
     entry = db.query(Entries).filter(Entries.entryId == body.entryId).first()
-    if entry.userId == userid and entry.iv == body.iv:
+    if entry.userId == int(userid) and entry.iv == body.iv:
         db.delete(entry)
         db.commit()
+        return "Entry Deleted"
     else:
         raise HTTPException(status_code=400, detail="Entry not deleted")
