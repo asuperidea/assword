@@ -5,9 +5,8 @@ from typing import Annotated, List
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
-from models import Users, Entries
+from models import Users, Entries, UserBase, UserPublic, UserCreate, UserSalt, EntryCreate, EntryGet, EntryBase
 from database import engineUsers, engineEntries, SessionUsers, SessionEntries, Base
-import hashlib
 import os
 from dotenv import load_dotenv
 from jwtfuncs import createJWT, decodeJWT
@@ -39,54 +38,6 @@ load_dotenv()
 JWT_KEY = os.getenv("JWT_KEY")
 if not JWT_KEY:
     raise RuntimeError("JWT_KEY environment variable is not set")
-
-class UserBase(BaseModel):
-    userId: int
-    email: str
-    salt: str
-    authKey: str
-
-    class Config:
-        from_attributes = True
-
-class UserPublic(BaseModel):
-    userId: int
-    email: str
-
-    class Config:
-        from_attributes = True
-
-class UserCreate(BaseModel):
-    email: str
-    salt: str
-    authKey: str
-
-class UserSalt(BaseModel):
-    salt: str
-
-    class Config:
-            from_attributes = True
-
-class UserValidate(BaseModel):
-    email:str
-    authKey:str
-
-class EntryCreate(BaseModel):
-    title: str
-    content: str
-    iv: str
-
-class EntryGet(BaseModel):
-    entryId: int
-    title: str
-    content: str
-    iv: str
-
-class EntryBase(BaseModel):
-    entryId: int
-    userId: int
-    title: str
-    content: str
 
 def get_db_users():
     db_users = SessionUsers() 
