@@ -53,6 +53,15 @@ def get_db_entries():
     finally:
         db_entries.close()
 
+def validateJWT(token: str) -> int:
+    decodedJWT = decodeJWT(token, JWT_KEY)
+    if isinstance(decodedJWT, dict) and decodedJWT.get("sub") == "Log In Validation":
+        return decodedJWT["id"]
+    if decodedJWT == "Expired Token":
+        raise HTTPException(status_code=400, detail="Expired JWT")
+    raise HTTPException(status_code=400, detail="Invalid JWT")
+
+
 @app.get("/")
 def root():
     return {"message":"Welcome, Server Running"}
@@ -90,31 +99,24 @@ def signup(user: UserCreate, db:Session = Depends(get_db_users)):
 
 @app.post("/entry/new")
 def newEntry(entry:EntryCreate, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
-    decodedJWT = decodeJWT(credentials.credentials, JWT_KEY)
-    if isinstance(decodedJWT, dict) and decodedJWT["sub"] == "Log In Validation":
-        newEntry = Entries(**entry.model_dump())
-        newEntry.userId = decodedJWT["id"]
-        db.add(newEntry)
-        db.commit()
-        db.refresh(newEntry)
-        return newEntry
-    elif decodedJWT == "Expired Token":
-            raise HTTPException(status_code=400, detail="Expired JWT")
-    else:
-        raise HTTPException(status_code=400, detail="Invalid JWT")
+    userid = validateJWT(credentials.credentials)
+    newEntry = Entries(**entry.model_dump())
+    newEntry.userId = userid
+    db.add(newEntry)
+    db.commit()
+    db.refresh(newEntry)
+    return newEntry
 
 @app.get("/entry/get", response_model=List[EntryGet])
 def getEntries(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
-    decodedJWT = decodeJWT(credentials.credentials, JWT_KEY)
-    if isinstance(decodedJWT, dict) and decodedJWT["sub"] == "Log In Validation":
-        id = decodedJWT["id"]
-        userEntries = db.query(Entries).filter(Entries.userId == id).all()
-        return userEntries
-    elif decodedJWT == "Expired Token":
-        raise HTTPException(status_code=400, detail="Expired JWT")
-    else:
-        raise HTTPException(status_code=400, detail="Invalid JWT")
+    userid = validateJWT(credentials.credentials)
+    userEntries = db.query(Entries).filter(Entries.userId == userid).all()
+    return userEntries
 
 @app.delete("/entry/delete")
-def deleteEntry(entry:entryDelete, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
-    pass
+def deleteEntry(body:entryDelete, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
+    userid = validateJWT(credentials.credentials)
+    entry = db.query(Entries).filter(Entries.entryId == body.entryId).first()
+
+    if entry.userId == userid and entry.iv == body.iv:
+        
