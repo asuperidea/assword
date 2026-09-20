@@ -1,0 +1,84 @@
+body {
+  background-color: #0D1B1E !important;
+}
+
+html a {
+  color: #0D1B1E;
+}
+html a:hover {
+  color: #EC7357;
+}
+html a:active {
+  color: #48A9A6;
+}
+
+.light {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 300;
+}
+
+.reg {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 400;
+}
+
+.med {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 500;
+}
+
+.semi {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 600;
+}
+
+.bold {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 700;
+}
+
+.coral {
+  color: #EC7357;
+}
+
+.light {
+  color: #F6EFEE;
+}
+
+#start {
+  margin-top: 6rem;
+}
+
+#docs {
+  margin-top: 6rem;
+}
+
+.urldiv {
+  max-width: 50rem;
+  min-width: 20rem;
+  width: 65%;
+  margin: auto;
+}
+
+.urlPlace {
+  background-color: #0D1B1E;
+  color: #F6EFEE;
+  border: solid 1px #F6EFEE;
+  border-radius: 4px;
+  width: 100%;
+  height: 3rem;
+  transition: 0.3s ease all;
+  margin-top: -0.75rem;
+}
+.urlPlace:focus {
+  border: solid 1px #48A9A6;
+  outline: none;
+}
+.urlPlace::-moz-placeholder {
+  color: #F6EFEE;
+  opacity: 0.3;
+}
+.urlPlace::placeholder {
+  color: #F6EFEE;
+  opacity: 0.3;
+}/*# sourceMappingURL=index.css.map */

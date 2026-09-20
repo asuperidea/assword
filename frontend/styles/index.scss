@@ -1,0 +1,89 @@
+@use "sass:list";
+@use "sass:color";
+
+$font-stack: Space Grotesk, sans-serif;
+
+$dark: #0D1B1E;
+$light: #F6EFEE;
+$coral: #EC7357;
+$teal: #48A9A6;
+$darkteal: #183837;
+
+
+body {
+    background-color: $dark !important;
+}
+html a {
+    color: $dark;
+
+    &:hover {
+        color: $coral;
+    }
+    &:active {
+        color: $teal;
+    }
+}
+
+
+.light{
+  font-family: $font-stack;
+  font-weight: 300;
+}
+.reg{
+  font-family: $font-stack;
+  font-weight: 400;
+}
+.med{
+  font-family: $font-stack;
+  font-weight: 500;
+}
+.semi{
+  font-family: $font-stack;
+  font-weight: 600;
+}
+.bold{
+  font-family: $font-stack;
+  font-weight: 700;
+}
+
+.coral{
+    color: $coral;
+}
+.light{
+    color: $light;
+}
+
+#start{
+    margin-top: 6rem;
+}
+#docs{
+    margin-top: 6rem;
+}
+
+
+
+.urldiv{
+    max-width: 50rem;
+    min-width: 20rem;
+    width: 65%;
+    margin: auto;
+}
+.urlPlace{
+    background-color: $dark;
+    color: $light;
+    border: solid 1px $light;
+    border-radius: 4px;
+    width: 100%;
+    height: 3rem;
+    transition: .3s ease all;
+    margin-top: -.75rem;
+
+    &:focus{
+        border: solid 1px $teal;
+        outline: none;
+    }
+    &::placeholder{
+        color: $light;
+        opacity: .3;
+    }
+}
