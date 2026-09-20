@@ -113,10 +113,24 @@ def getEntries(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme
     userEntries = db.query(Entries).filter(Entries.userId == userid).all()
     return userEntries
 
-@app.get("/entry/change")
+@app.post("/entry/change")
 def changeEntry(body:EntryChange, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
-    userid = validateJWT
-
+    userid = validateJWT(credentials.credentials)
+    entry = db.query(Entries).filter(Entries.entryId == body.entryId).first()
+    if entry is None:
+        raise HTTPException(status_code=404, detail="Entry not found")
+    if int(userid) == entry.userId:
+        entry.title = body.title
+        entry.website = body.website
+        entry.username = body.username
+        entry.content = body.content
+        entry.iv = body.iv
+        db.commit()
+        db.refresh(entry)
+        return entry
+    else:
+        raise HTTPException(status_code=400, detail="Incorrect User ID")
+ 
 
 @app.delete("/entry/delete")
 def deleteEntry(body:EntryDelete, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
