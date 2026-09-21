@@ -22,30 +22,30 @@
     <section id="signupView">
         <div class="hero mt-5 mx-auto d-flex flex-column align-items-center">
             <h2 class="reg fs-2 coral">Sign Up</h2>
-            <p class="reg text-center coral mt-2">Already Have An Account? <a class="txt-btn underline-slide coral toLogIn">Log In</a></p>
+            <p class="reg text-center coral mt-2">Already Have An Account? <a class="txt-btn coral toLogIn">Log In</a></p>
         </div>
         <div id="signUpErrorBox" class="d-flex mx-auto flex-column align-items-center"></div>
         <div class="inputs d-flex flex-column mt-2 gap-1">
             <input id="signup-email" placeholder="Username" class="basicinput mx-auto">
             <input id="signup-password" placeholder="Password" class="basicinput mx-auto">
             <input id="signup-url" placeholder="Backend URL" class="basicinput mx-auto">
-            <p class="reg text-center coral mt-2">Use 'assword-backend.simoncrystal.dev' for Assword's default backend</p>
+            <p class="reg text-center coral mt-2">Leave the URL blank to use asswords default backend</p>
         </div>
         <button class="basicbtn d-block mx-auto mt-3" id="startSignUp">Sign Up</button>
     </section>
 
 
     <section id="loginView">
-        <div class="hero mt-5 mx-auto">
-            <h2 class="reg fs-2">Log In</h2>
-            <p class="reg text-center mt-2">Don't Have An Account?<button class="txt-btn underline-slide toSignUp">Sign Up</button></p>
+        <div class="hero mt-5 mx-auto d-flex flex-column align-items-center">
+            <h2 class="reg coral fs-2">Log In</h2>
+            <p class="reg coral text-center mt-2">Don't Have An Account? <a class="coral txt-btn toSignUp">Sign Up</a></p>
         </div>
         <div id="logInErrorBox" class="d-flex mx-auto flex-column align-items-center"></div>
         <div class="inputs d-flex flex-column mt-2 gap-1">
-            <input id="login-email" placeholder="E-Mail" class="input1 mx-auto">
-            <input id="login-password" placeholder="Master Password" class="input1 mx-auto" type="password">
+            <input id="login-email" placeholder="E-Mail" class="basicinput mx-auto">
+            <input id="login-password" placeholder="Master Password" class="basicinput mx-auto" type="password">
         </div>
-        <button class="in-btn d-block mx-auto mt-3 " id="startLogIn">Log In</button>
+        <button class="basicbtn d-block mx-auto mt-3 " id="startLogIn">Log In</button>
     </section>
 
     <section id="valutView">

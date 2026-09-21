@@ -1,4 +1,4 @@
-const baseURL = "https://assword-backend.simoncrystal.dev/"
+const baseURL = localStorage.getItem('url');
 
 export async function APIloginStart(email) {
     const url = baseURL + "login/start?userEmail=" + encodeURIComponent(email);
@@ -39,6 +39,7 @@ export async function APIloginValidate(email, authKey) {
 
 export async function APIsignup(email, salt, authKey) {
     const url = baseURL + "signup";
+    console.log(url);
     const response = await fetch(url, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},

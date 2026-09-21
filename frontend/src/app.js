@@ -32,5 +32,5 @@ document.querySelectorAll(".ridJWT").forEach(button => {
 if (sessionStorage.getItem("jwt")){
     showView("valut");
 } else {
-    showView("landing");
+    showView("login");
 }
