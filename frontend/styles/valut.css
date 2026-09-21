@@ -4,9 +4,11 @@ body {
 
 html a {
   color: #081012;
+  transition: 0.4s ease all;
 }
 html a:hover {
   color: #EC7357;
+  cursor: pointer;
 }
 html a:active {
   color: #48A9A6;
@@ -65,53 +67,29 @@ html a:active {
   color: #081012;
 }
 
-.hero {
-  width: 95%;
-  max-width: 50rem;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-.in-btn {
-  background-color: #F6EFEE;
-  width: 6rem;
-  height: 2.4rem;
-  transition: all 0.2s;
-  border-radius: 2rem;
-  border: 1px solid #48A9A6;
-}
-.in-btn:hover {
-  border: 1px solid #EC7357 !important;
-}
-.in-btn:active {
-  background-color: #EC7357;
-}
-
-.txt-btn {
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  text-decoration: underline;
-  transition: all 0.2s;
-}
-.txt-btn:hover {
-  color: #48A9A6;
-}
-
-.dark-btn {
+.basicinput {
   background-color: #081012;
   color: #F6EFEE;
-  width: 12rem;
-  height: 2.4rem;
-  transition: all 0.2s;
-  border-radius: 2rem;
-  border: 1px solid #EC7357;
+  border: solid 1px #F6EFEE;
+  border-radius: 4px;
+  width: 50%;
+  max-width: 40rem;
+  min-width: 20rem;
+  height: 2rem;
+  transition: 0.3s ease all;
+  margin-top: 0.5rem;
 }
-.dark-btn:hover {
-  border: 1px solid #48A9A6 !important;
+.basicinput:focus {
+  border: solid 1px #48A9A6;
+  outline: none;
 }
-.dark-btn:active {
-  background-color: #48A9A6;
+.basicinput::-moz-placeholder {
+  color: #F6EFEE;
+  opacity: 0.3;
+}
+.basicinput::placeholder {
+  color: #F6EFEE;
+  opacity: 0.3;
 }
 
 .newEntryBox {

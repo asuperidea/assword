@@ -13,22 +13,21 @@
 <body>
     <section id="landingView">
         <div class="d-flex flex-column align-items-center mt-5">
-            <button class="basicbtn">Sign Up</button>
-            <button class="basicbtn mt-5">Log In</button>
+            <button class="basicbtn toSignUp">Sign Up</button>
+            <button class="basicbtn mt-5 toLogIn">Log In</button>
         </div>
     </section>
 
 
     <section id="signupView">
-        <div class="hero mt-5 mx-auto">
-            <h2 class="reg fs-2">Sign Up</h2>
-            <p class="reg text-center mt-2">Already Have An Account?<button class="txt-btn underline-slide toLogIn">Log In</button></p>
+        <div class="hero mt-5 mx-auto d-flex flex-column align-items-center">
+            <h2 class="reg fs-2 coral">Sign Up</h2>
+            <p class="reg text-center coral mt-2">Already Have An Account? <a class="txt-btn underline-slide coral toLogIn">Log In</a></p>
         </div>
-        <div id="signUpErrorBox" class="d-flex mx-auto flex-column align-items-center">
-        </div>
+        <div id="signUpErrorBox" class="d-flex mx-auto flex-column align-items-center"></div>
         <div class="inputs d-flex flex-column mt-2 gap-1">
-            <input id="signup-email" placeholder="E-Mail" class="input1 mx-auto">
-            <input id="signup-password" placeholder="Password" class="input1 mx-auto">
+            <input id="signup-email" placeholder="E-Mail" class="basicinput mx-auto">
+            <input id="signup-password" placeholder="Password" class="basicinput mx-auto">
         </div>
         <button class="in-btn d-block mx-auto mt-3" id="startSignUp">Sign Up</button>
     </section>
