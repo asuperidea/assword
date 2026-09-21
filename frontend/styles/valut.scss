@@ -1,16 +1,16 @@
 @use "sass:list";
 @use "sass:color";
 
-$font-stack: Inconsolata, monospace;
+$font-stack: Space Grotesk, sans-serif;
 
-$dark: #0D1B1E;
+$dark: #081012;
 $light: #F6EFEE;
 $coral: #EC7357;
 $teal: #48A9A6;
 $darkteal: #183837;
 
 body {
-    background-color: $light !important;
+    background-color: $dark !important;
 }
 html a {
     color: $dark;
@@ -21,19 +21,6 @@ html a {
     &:active {
         color: $teal;
     }
-}
-.input1 {
-    width: 50%;
-    border-radius: 2px;
-    background-color: $light;
-    color: $darkteal;
-    border: 1px solid $teal;
-}
-.input2 {
-    width: 70%;
-    background-color: $dark;
-    border: 1px solid $coral;
-    color: $light;
 }
 
 .light{
@@ -59,7 +46,30 @@ html a {
 .coral{
     color: $coral;
 }
+.lightclr{
+    color: $light;
+}
 
+.basicbtn {
+    background-color: $dark;
+    color: $light;
+    width: 10rem;
+    height: 2.3rem;
+    border: 1px solid $light;
+    border-radius: .4rem;
+    transition: .4s ease all;
+
+    &:hover{
+        background-color: $coral;
+        border-color: $coral;
+        color: $dark;
+    }
+    &:active{
+        background-color: $teal;
+        border-color: $teal;
+        color: $dark;
+    }
+}
 .hero{
     width: 95%;
     max-width: 50rem;

@@ -1,9 +1,9 @@
 body {
-  background-color: #0D1B1E !important;
+  background-color: #081012 !important;
 }
 
 html a {
-  color: #0D1B1E;
+  color: #081012;
 }
 html a:hover {
   color: #EC7357;
@@ -61,7 +61,7 @@ html a:active {
 }
 
 .urlPlace {
-  background-color: #0D1B1E;
+  background-color: #081012;
   color: #F6EFEE;
   border: solid 1px #F6EFEE;
   border-radius: 4px;
@@ -84,7 +84,7 @@ html a:active {
 }
 
 .gobtn {
-  background-color: #0D1B1E;
+  background-color: #081012;
   color: #F6EFEE;
   border: 1px solid #EC7357;
   width: 12rem;
@@ -93,10 +93,10 @@ html a:active {
 }
 .gobtn:hover {
   background-color: #EC7357;
-  color: #0D1B1E;
+  color: #081012;
 }
 .gobtn:active {
   background-color: #48A9A6;
   border: 1px solid #48A9A6;
-  color: #0D1B1E;
+  color: #081012;
 }/*# sourceMappingURL=index.css.map */

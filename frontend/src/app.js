@@ -13,16 +13,16 @@ export function showView(viewName) {
     }
 }
 
-document.querySelectorAll("#toSignUp").forEach(button => {
+document.querySelectorAll(".toSignUp").forEach(button => {
     button.addEventListener("click", () => showView("signup"));
 });
-document.querySelectorAll("#toLogIn").forEach(button => {
+document.querySelectorAll(".toLogIn").forEach(button => {
     button.addEventListener("click", () => showView("login"));
 });
-document.querySelectorAll("#toValut").forEach(button => {
+document.querySelectorAll(".toValut").forEach(button => {
     button.addEventListener("click", () => showView("valut"));
 });
-document.querySelectorAll("#ridJWT").forEach(button => {
+document.querySelectorAll(".ridJWT").forEach(button => {
     button.addEventListener("click", () => {
         sessionStorage.removeItem("jwt");
         window.location.reload();

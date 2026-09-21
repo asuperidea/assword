@@ -1,9 +1,9 @@
 body {
-  background-color: #F6EFEE !important;
+  background-color: #081012 !important;
 }
 
 html a {
-  color: #0D1B1E;
+  color: #081012;
 }
 html a:hover {
   color: #EC7357;
@@ -12,48 +12,57 @@ html a:active {
   color: #48A9A6;
 }
 
-.input1 {
-  width: 50%;
-  border-radius: 2px;
-  background-color: #F6EFEE;
-  color: #183837;
-  border: 1px solid #48A9A6;
-}
-
-.input2 {
-  width: 70%;
-  background-color: #0D1B1E;
-  border: 1px solid #EC7357;
-  color: #F6EFEE;
-}
-
 .light {
-  font-family: Inconsolata, monospace;
+  font-family: Space Grotesk, sans-serif;
   font-weight: 300;
 }
 
 .reg {
-  font-family: Inconsolata, monospace;
+  font-family: Space Grotesk, sans-serif;
   font-weight: 400;
 }
 
 .med {
-  font-family: Inconsolata, monospace;
+  font-family: Space Grotesk, sans-serif;
   font-weight: 500;
 }
 
 .semi {
-  font-family: Inconsolata, monospace;
+  font-family: Space Grotesk, sans-serif;
   font-weight: 600;
 }
 
 .bold {
-  font-family: Inconsolata, monospace;
+  font-family: Space Grotesk, sans-serif;
   font-weight: 700;
 }
 
 .coral {
   color: #EC7357;
+}
+
+.lightclr {
+  color: #F6EFEE;
+}
+
+.basicbtn {
+  background-color: #081012;
+  color: #F6EFEE;
+  width: 10rem;
+  height: 2.3rem;
+  border: 1px solid #F6EFEE;
+  border-radius: 0.4rem;
+  transition: 0.4s ease all;
+}
+.basicbtn:hover {
+  background-color: #EC7357;
+  border-color: #EC7357;
+  color: #081012;
+}
+.basicbtn:active {
+  background-color: #48A9A6;
+  border-color: #48A9A6;
+  color: #081012;
 }
 
 .hero {
@@ -90,7 +99,7 @@ html a:active {
 }
 
 .dark-btn {
-  background-color: #0D1B1E;
+  background-color: #081012;
   color: #F6EFEE;
   width: 12rem;
   height: 2.4rem;
@@ -110,7 +119,7 @@ html a:active {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background-color: #0D1B1E;
+  background-color: #081012;
   border-radius: 1rem;
   width: 80%;
   min-height: 30rem;
@@ -136,7 +145,7 @@ html a:active {
   min-height: 7rem;
   max-height: 10rem;
   background-color: #EC7357;
-  outline: 1px solid #0D1B1E;
+  outline: 1px solid #081012;
   word-break: break-all;
 }
 
