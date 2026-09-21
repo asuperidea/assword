@@ -54,7 +54,7 @@ html a {
 }
 
 #start{
-    margin-top: 6rem;
+    margin-top: 16rem;
 }
 #docs{
     margin-top: 6rem;
@@ -85,5 +85,23 @@ html a {
     &::placeholder{
         color: $light;
         opacity: .3;
+    }
+}
+.gobtn{
+    background-color: $dark;
+    color: $light;
+    border: 1px solid $coral;
+    width: 12rem;
+    border-radius: .4rem;
+    transition: .4s ease all;
+
+    &:hover {
+        background-color: $coral;
+        color: $dark;
+    }
+    &:active {
+        background-color: $teal;
+        border: 1px solid $teal;
+        color: $dark;
     }
 }

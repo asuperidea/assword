@@ -1,5 +1,3 @@
-import { encryptEntry, deriveEncryptionKey } from './crypto.js';
-
 const baseURL = "https://assword-backend.simoncrystal.dev/"
 
 export async function APIloginStart(email) {
@@ -40,10 +38,11 @@ export async function APIloginValidate(email, authKey) {
 
 
 export async function APIsignup(email, salt, authKey) {
-    const response = await fetch(baseURL + "signup", {
+    const url = baseURL + "signup";
+    const response = await fetch(url, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ email, salt, authKey }),
+        body: JSON.stringify({email, salt, authKey }),
     });
 
     if (!response.ok) {
@@ -52,6 +51,7 @@ export async function APIsignup(email, salt, authKey) {
     }    
     return response.json();
   }
+
 export async function APIcreateEntry(jwt, title, encryptedContent) {
     const url = baseURL + "entry/new";
     const content = encryptedContent.ciphertext;

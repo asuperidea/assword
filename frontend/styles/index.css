@@ -46,7 +46,7 @@ html a:active {
 }
 
 #start {
-  margin-top: 6rem;
+  margin-top: 16rem;
 }
 
 #docs {
@@ -81,4 +81,22 @@ html a:active {
 .urlPlace::placeholder {
   color: #F6EFEE;
   opacity: 0.3;
+}
+
+.gobtn {
+  background-color: #0D1B1E;
+  color: #F6EFEE;
+  border: 1px solid #EC7357;
+  width: 12rem;
+  border-radius: 0.4rem;
+  transition: 0.4s ease all;
+}
+.gobtn:hover {
+  background-color: #EC7357;
+  color: #0D1B1E;
+}
+.gobtn:active {
+  background-color: #48A9A6;
+  border: 1px solid #48A9A6;
+  color: #0D1B1E;
 }/*# sourceMappingURL=index.css.map */
