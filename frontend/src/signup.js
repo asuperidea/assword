@@ -15,6 +15,7 @@ document.getElementById("startSignUp").addEventListener("click", async() => {
     const area = document.getElementById("signUpErrorBox");
     const email = document.getElementById("signup-email").value;
     const master = document.getElementById("signup-password").value;
+    document.cookie = "username="+document.getElementById('signup-url').value;
     const salt = generateSalt();
     const authKey = await deriveAuthKey(master, salt);
     try{
@@ -24,8 +25,8 @@ document.getElementById("startSignUp").addEventListener("click", async() => {
         console.log("CATCHING ERROR FROM SIGNUP.JS");
         area.innerHTML='';
         area.insertAdjacentHTML('beforeend', `
-            <h2 class="bold fs-5">Password Issue!</h2>
-            <p class="reg">Your password must be between 10 and 100 characters!</p>`)
+            <h2 class="bold fs-5 lightclr">Password Issue!</h2>
+            <p class="reg lightclr">Your password must be between 10 and 100 characters!</p>`)
         return "error";
     }
     try {
@@ -33,12 +34,12 @@ document.getElementById("startSignUp").addEventListener("click", async() => {
         await APIsignup(email, salt, authKey);
         area.innerHTML='';
         area.insertAdjacentHTML('beforeend', `
-            <h2 class="bold fs-5">Sign Up Successful!</h2>
-            <button class="txt-btn underline-slide" id="toLogIn">Log In</button>`)
+            <h2 class="bold fs-5 lightclr">Sign Up Successful!</h2>
+            <button class="txt-btn lightclr underline-slide toLogIn">Log In</button>`)
     } catch(error) {
         area.innerHTML='';
         area.insertAdjacentHTML('beforeend', `
-            <h2 class="bold fs-5">Sign Up Error!</h2>
-            <p class="reg">An error occured during your signup process. The email you used may already be in use.</p>`)
+            <h2 class="bold fs-5 lightclr">Sign Up Error!</h2>
+            <p class="reg lightclr">An error occured during your signup process. The username you used may already be in use.</p>`)
     }
 });
