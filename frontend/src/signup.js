@@ -56,4 +56,5 @@ document.getElementById("startSignUp").addEventListener("click", async() => {
             <p class="reg lightclr">An error occured during your signup process. The username you used may already be in use.</p>
             <p class="reg lightclr">Make Sure ${localStorage.getItem('url')} Is Working!`)
     }
+    showView("login");
 });

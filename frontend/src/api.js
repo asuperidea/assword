@@ -13,7 +13,6 @@ export async function APIloginStart(email) {
 
     sessionStorage.setItem("email", email);
     sessionStorage.setItem("salt", data.salt);
-  
     return data.salt;
 }
 

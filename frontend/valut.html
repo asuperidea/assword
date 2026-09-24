@@ -42,31 +42,34 @@
         </div>
         <div id="logInErrorBox" class="d-flex mx-auto flex-column align-items-center"></div>
         <div class="inputs d-flex flex-column mt-2 gap-1">
-            <input id="login-email" placeholder="E-Mail" class="basicinput mx-auto">
+            <input id="login-email" placeholder="Username" class="basicinput mx-auto">
             <input id="login-password" placeholder="Master Password" class="basicinput mx-auto" type="password">
         </div>
         <button class="basicbtn d-block mx-auto mt-3 " id="startLogIn">Log In</button>
     </section>
 
     <section id="valutView">
-        <div class="hero mt-5 mx-auto">
-            <h1 class="reg fs-2">Your Passwords</h1>
+        <div class="d-flex flex-column align-items-center mt-5 mx-auto">
+            <h1 class="reg coral fs-2">Your Passwords</h1>
         </div>
         <div id="valutErrorBox"></div>
         <div id="passwordsBox" class="passwordsBox">
         </div>
-        <button id="startNewPassword" class="in-btn d-block mx-auto" style="width: 10rem;">New Password</button>
-        <button class="ridJWT txt-btn d-block mx-auto">Log Out</button>
+        <button id="startNewPassword" class="basicbtn d-block mx-auto">New Password</button>
+        <button class="ridJWT basicbtn d-block mx-auto mt-5">Log Out</button>
     </section>
     <section id="newEntryView">
         <div class="newEntryBox">
             <h1 class="fs-2 mt-3 text-center coral">New Password</h1>
-            <input id="title" placeholder="Password Name" class="input2 mx-auto">
-            <input id="content" placeholder="Password" type="password" class="input2 mx-auto">
-            <button id="newEntryButton" class="dark-btn mx-auto mt-5">Create Password</button>
-            <button class="txt-btn coral mx-auto mt-1 toValut">Go Back</button>
+            <input id="title" placeholder="Password Title*" class="basicinput mx-auto">
+            <input id="title" placeholder="Website" class="basicinput mx-auto">
+            <input id="title" placeholder="Username" class="basicinput mx-auto">
+            <input id="content" placeholder="Password*" type="password" class="basicinput mx-auto">
+            <p class="text-center lightclr light">*Required</p>
+            <button id="newEntryButton" class="basicbtn mx-auto mt-5">Create Password</button>
+            <button class="basicbtn coral mx-auto mt-1 toValut">Go Back</button>
             <div id="newEntryErrorBox" class="d-flex flex-column align-items-center gap-2"></div>
-            <p class="fs-6 coral mt-auto text-center">Never Enter Private Info Into The "Password Name" Input. All Passwords Are Encrypted In Browser.</p>
+            <p class="fs-6 light lightclr text-center fixed-bottom"> All Passwords Are Encrypted In Browser.</p>
         </div>
     </section>
 
