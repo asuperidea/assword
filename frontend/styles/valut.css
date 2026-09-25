@@ -67,6 +67,22 @@ html a:active {
   color: #081012;
 }
 
+.textbtn {
+  background-color: #081012;
+  color: #F6EFEE;
+  width: 10rem;
+  height: auto;
+  border: none;
+  transition: 0.4s ease all;
+}
+.textbtn:hover {
+  color: #EC7357;
+  text-decoration: underline;
+}
+.textbtn:active {
+  color: #48A9A6;
+}
+
 .basicinput {
   background-color: #081012;
   color: #F6EFEE;

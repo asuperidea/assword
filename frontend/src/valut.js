@@ -29,7 +29,7 @@ try {
     }
     if (entries.length == 0){
         passArea.insertAdjacentHTML('beforeend',`
-            <p class='text-center'>You Dont Have Any Passwords</p>`);
+            <p class='coral light fs-6 text-center'>You Dont Have Any Passwords</p>`);
     }
 } catch (error) {
     console.log("CATCHING ERROR FROM VALUT.JS");

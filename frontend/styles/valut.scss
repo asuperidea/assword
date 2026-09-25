@@ -72,6 +72,24 @@ html a {
         color: $dark;
     }
 }
+
+.textbtn {
+    background-color: $dark;
+    color: $light;
+    width: 10rem;
+    height: auto;
+    border: none;
+    transition: .4s ease all;
+
+    &:hover{
+        color: $coral;
+        text-decoration: underline;
+    }
+    &:active{
+        color: $teal;
+    }
+}
+
 .basicinput{
     background-color: $dark;
     color: $light;
