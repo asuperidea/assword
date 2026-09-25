@@ -12,6 +12,18 @@ export function showView(viewName) {
         view.style.display = "block";
     }
 }
+export function setUrl(url){
+    if (url == ""){
+        return "https://assword-backend.simoncrystal.dev/"
+    }
+    if (!url.includes("https://")){
+        url = "https://"+url;
+    }
+    if (url[url.length-1] != "/"){
+        url = url+"/"
+    }
+    return url;
+}
 
 document.querySelectorAll(".toSignUp").forEach(button => {
     button.addEventListener("click", () => showView("signup"));
@@ -28,9 +40,18 @@ document.querySelectorAll(".ridJWT").forEach(button => {
         window.location.reload();
     });
 });
+document.querySelectorAll(".setUrl").forEach(button => {
+    button.addEventListener("click", () => {
+        localStorage.setItem("url", setUrl(document.getElementById("signup-url").value));
+        showView("login")
+    });
+});
 
 if (sessionStorage.getItem("jwt")){
     showView("valut");
-} else {
-    showView("login");
+} else if (!localStorage.getItem('url')){
+    showView("noUrl");
+} 
+else {
+    showView("landing");
 }

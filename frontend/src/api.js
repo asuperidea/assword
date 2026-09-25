@@ -1,7 +1,12 @@
-const baseURL = localStorage.getItem('url');
-
+function getUrl() {
+    const url = (localStorage.getItem('url') || sessionStorage.getItem('url') || '').trim();
+    const normalizedUrl = url ? url.replace(/\/+$/, '') + '/' : '';
+    sessionStorage.setItem('url', normalizedUrl);
+    console.log(normalizedUrl);
+    return normalizedUrl;
+}
 export async function APIloginStart(email) {
-    const url = baseURL + "login/start?userEmail=" + encodeURIComponent(email);
+    const url = getUrl() + "login/start?userEmail=" + encodeURIComponent(email);
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -17,7 +22,7 @@ export async function APIloginStart(email) {
 }
 
 export async function APIloginValidate(email, authKey) {
-    const url = baseURL + "login/validate" + 
+    const url = getUrl() + "login/validate" + 
     "?userEmail="+ 
     encodeURIComponent(email)+ 
     "&userAuth="+
@@ -37,7 +42,7 @@ export async function APIloginValidate(email, authKey) {
 
 
 export async function APIsignup(email, salt, authKey) {
-    const url = baseURL + "signup";
+    const url = getUrl() + "signup";
     console.log(url);
     const response = await fetch(url, {
         method: "POST",
@@ -53,7 +58,7 @@ export async function APIsignup(email, salt, authKey) {
   }
 
 export async function APIcreateEntry(jwt, title, encryptedContent) {
-    const url = baseURL + "entry/new";
+    const url = getUrl() + "entry/new";
     const content = encryptedContent.ciphertext;
     const iv = encryptedContent.iv;
 
@@ -72,7 +77,7 @@ export async function APIcreateEntry(jwt, title, encryptedContent) {
 
 }
 export async function APIgetEntries(jwt) { 
-    const url = baseURL + "entry/get";
+    const url = getUrl() + "entry/get";
 
     const response = await fetch(url, {
         method: 'GET',

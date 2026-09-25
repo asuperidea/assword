@@ -1,6 +1,6 @@
 import { deriveAuthKey, generateSalt } from './crypto.js';
 import { APIsignup } from './api.js';
-import { showView } from './app.js'
+import { showView, setUrl } from './app.js'
 
 function evalPassword(password) {
     if (password.length < 10 || password.length > 100) {
@@ -9,18 +9,6 @@ function evalPassword(password) {
     } else {
         return {"accept": true, "reason": null};
     }
-}
-function setUrl(url){
-    if (url == ""){
-        return "https://assword-backend.simoncrystal.dev/"
-    }
-    if (!url.includes("https://")){
-        url = "https://"+url;
-    }
-    if (url[url.length-1] != "/"){
-        url = url+"/"
-    }
-    return url;
 }
 
 document.getElementById("startSignUp").addEventListener("click", async() => {
