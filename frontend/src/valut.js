@@ -35,8 +35,8 @@ try {
     console.log("CATCHING ERROR FROM VALUT.JS");
     area.innerHTML='';
     area.insertAdjacentHTML('beforeend', `
-        <h2>Session Expired!</h2>
-        <p class="reg text-center">Your Session Has Expired. Please <button class="txt-btn underline-slide" id="toLogIn">Log In Again</button></p>`);
+        <h2 class="lightclr mt-5 text-center bold">Session Expired!</h2>
+        <p class="reg text-center lightclr">Your Session Has Expired. Please <button class="textbtn toLogIn">Log In Again</button></p>`);
 }
 
 document.getElementById("startNewPassword").addEventListener("click", async() => {
@@ -44,17 +44,17 @@ document.getElementById("startNewPassword").addEventListener("click", async() =>
 });
 
 document.getElementById("newEntryButton").addEventListener("click", async() => {
-    const title = document.getElementById("title").value;
-    const unencrypted = document.getElementById("content").value;
+    const untitle = document.getElementById("title").value;
+    const uncontent = document.getElementById("content").value;
+    const unuser = document.getElementById("username").value;
+    const unwebsite = document.getElementById("website").value;
     const jwt = sessionStorage.getItem("jwt");
     const area = document.getElementById("newEntryErrorBox");
 
-    const encrypted = await encryptEntry(encryptionKey, unencrypted);
-
     try {
-        evalContent(title);
-        evalContent(evalContent);
-        await APIcreateEntry(jwt, title, encrypted);
+        evalContent(untitle);
+        const encrypted = await encryptEntry(encryptionKey, uncontent, untitle, unuser, unwebsite);
+        await APIcreateEntry(jwt, encrypted);
         showView("valut");
         window.location.reload();
     }catch (error) {
@@ -62,7 +62,7 @@ document.getElementById("newEntryButton").addEventListener("click", async() => {
         area.innerHTML = '';
         area.insertAdjacentHTML('beforeend', `
             <h2 class='semi coral'>Error!</h2>
-            <p class='reg coral'>An error occured while processing your password. Make sure every box is filled out.</p>`
+            <p class='reg coral'>An error occured while processing your password. Make sure every required(*) box is filled out.</p>`
         )};
 });
 

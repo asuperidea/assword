@@ -38,7 +38,7 @@ export async function deriveEncryptionKey(masterPassword, salt) {
     return btoa(String.fromCharCode(...new Uint8Array(derivada)));
 }
 
-export async function encryptEntry(encryptionKey, plainText) {
+export async function encryptEntry(encryptionKey, plainText, plainTitle, plainUser, plainweb) {
   const encoder = new TextEncoder();
   
   const iv = window.crypto.getRandomValues(new Uint8Array(12));

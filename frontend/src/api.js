@@ -60,12 +60,14 @@ export async function APIsignup(email, salt, authKey) {
 export async function APIcreateEntry(jwt, title, encryptedContent) {
     const url = getUrl() + "entry/new";
     const content = encryptedContent.ciphertext;
+    const website = encryptedContent.website;
+    const username = encryptedContent.username;
     const iv = encryptedContent.iv;
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {'Authorization': 'Bearer '+jwt, 'Content-Type': 'application/json'},
-        body: JSON.stringify({title, content, iv})
+        body: JSON.stringify({title, content, website, username, iv})
     });
 
     if (!response.ok) {
