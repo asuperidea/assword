@@ -120,10 +120,7 @@ def changeEntry(body:EntryChange, credentials: HTTPAuthorizationCredentials = De
     if entry is None:
         raise HTTPException(status_code=404, detail="Entry not found")
     if int(userid) == entry.userId:
-        entry.title = body.title
-        entry.website = body.website
-        entry.username = body.username
-        entry.content = body.content
+        entry.cipherText = body.cipherText
         entry.iv = body.iv
         db.commit()
         db.refresh(entry)

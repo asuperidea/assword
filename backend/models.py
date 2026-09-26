@@ -16,10 +16,7 @@ class Entries(Base):
 
     entryId = Column(Integer, primary_key=True, index=True, nullable=False)
     userId = Column(Integer, index=True, nullable=False)
-    title = Column(String, nullable=False)
-    website = Column(String)
-    username = Column(String)
-    content = Column(String, nullable=False)
+    cipherText = Column(String, nullable=False)
     iv = Column(String, nullable=False)
 
 # Models for function use (idk the term bro)
@@ -53,17 +50,12 @@ class UserSalt(BaseModel):
 
 class EntryCreate(BaseModel):
     title: str
-    content: str
-    website: str
-    username: str
+    cipherText: str
     iv: str
 
 class EntryGet(BaseModel):
     entryId: int
-    title: str
-    content: str
-    website: str
-    username: str
+    cipherText: str
     iv: str
 
 class EntryDelete(BaseModel):
@@ -72,16 +64,11 @@ class EntryDelete(BaseModel):
 
 class EntryChange(BaseModel):
     entryId: int
-    title: str
-    content: str
-    website: str
-    username: str
+    cipherText: str
     iv: str
 
 class EntryBase(BaseModel):
     entryId: int
     userId: int
-    title: str
-    website: str
-    username: str
-    content: str
+    cipherText: str
+    iv: str
