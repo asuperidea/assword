@@ -124,25 +124,42 @@ html a {
 
 .passwordsBox{
     height: auto;
-    width: 95%;
+    width: 85%;
     margin: auto;
-    display: grid;
-    grid-template-rows: 7rem;
-    grid-auto-rows: 15rem;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 1rem;
+    margin-top: 5rem;
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    gap: 2rem;
+
 }
 .password{
     display: flex;
-    max-width: 1fr;
-    min-width: 15rem;
-    flex-direction: column;
-    align-items: center;
-    min-height: 7rem;
-    max-height: 10rem;
-    background-color: $coral;
-    outline: 1px solid $dark;
-    word-break: break-all;
+    flex-direction: row;
+    flex: 1 1 auto;
+    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+    min-height: 2.4rem;
+    max-height: 3rem;
+    background-color: $dark;
+    outline: 1px solid $light;
+    border-radius: .3rem;
+    color: $light;
+    transition: .2s ease-in;
+
+    &:hover{
+        outline-color: $coral;
+        color: $coral;
+        cursor: pointer;
+    }
+    &:active {
+        outline-color: $teal;
+        color: $teal;
+
+    }
 }
 .about {
     margin-top: 9rem;

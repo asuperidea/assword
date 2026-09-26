@@ -10,28 +10,23 @@ area.replaceChildren();
 
 try {
     const entries = await APIgetEntries(jwt);
-    for (let i=0; i<entries.length; i++){
-        const childDiv = document.createElement("div");
-        const decryptedContent = await decryptEntry(encryptionKey, entries[i].content, entries[i].iv);
-        console.log(decryptedContent);
-        childDiv.insertAdjacentHTML('beforeend', `
-            <h2 class="semi fs-3">${entries[i].title}</h2>
-            <button type="button" class="txt-btn toggle-password">Show</button>
-            <p class="password-content" hidden>${decryptedContent}</p>`);
-        childDiv.id=`passwordDiv${i}`;
-        childDiv.classList.add("password");
-        childDiv.querySelector(".toggle-password").addEventListener("click", (event) => {
-            const content = childDiv.querySelector(".password-content");
-            content.hidden = !content.hidden;
-            event.currentTarget.textContent = content.hidden ? "Show" : "Hide";
-        });
-        passArea.appendChild(childDiv);
-    }
     if (entries.length == 0){
         passArea.insertAdjacentHTML('beforeend',`
             <p class='coral light fs-6 text-center'>You Dont Have Any Passwords</p>`);
     }
-} catch (error) {
+    for (const entry of entries){
+        const childDiv = document.createElement("div");
+        const decrypted = await decryptEntry(encryptionKey, entry.cipherText, entry.iv);
+        console.log(decrypted);
+        console.log(entries);
+        childDiv.insertAdjacentHTML('beforeend', `
+            <h2 class="reg fs-3">${decrypted.title}</h2>
+            <button type="button" class="textbtn toggle-password">See Password</button>`);
+        childDiv.id=`${entry.cipherText} ${entry.iv}`;
+        childDiv.classList.add("password");
+        passArea.appendChild(childDiv);
+    }
+} catch(error) {
     console.log("CATCHING ERROR FROM VALUT.JS");
     area.innerHTML='';
     area.insertAdjacentHTML('beforeend', `
