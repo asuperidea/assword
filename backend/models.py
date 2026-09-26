@@ -49,7 +49,6 @@ class UserSalt(BaseModel):
             from_attributes = True
 
 class EntryCreate(BaseModel):
-    title: str
     cipherText: str
     iv: str
 
