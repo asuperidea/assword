@@ -10,10 +10,10 @@ area.replaceChildren();
 
 try {
     const entries = await APIgetEntries(jwt);
-    for (let i=0; i< entries.length; i++){
+    for (let i=0; i<entries.length; i++){
         const childDiv = document.createElement("div");
         const decryptedContent = await decryptEntry(encryptionKey, entries[i].content, entries[i].iv);
-
+        console.log(decryptedContent);
         childDiv.insertAdjacentHTML('beforeend', `
             <h2 class="semi fs-3">${entries[i].title}</h2>
             <button type="button" class="txt-btn toggle-password">Show</button>
