@@ -63,9 +63,7 @@ export async function encryptEntry(encryptionKey, fields) {
 
   const encryptedBytes = new Uint8Array(encryptedBuffer);
   const ivString = btoa(String.fromCharCode(...iv));
-  const encryptedString = btoa(String.fromCharCode(...encryptedBytes));
-
-  return { iv: ivString, ciphertext: encryptedString };
+  const encryptedString = btoa(String.fromCharCode(...encryptedBytes));  return { iv: ivString, ciphertext: encryptedString };
 }
 
 export async function decryptEntry(encryptionKey, ciphertext, iv) {

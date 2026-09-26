@@ -50,10 +50,16 @@ document.getElementById("newEntryButton").addEventListener("click", async() => {
     const unwebsite = document.getElementById("website").value;
     const jwt = sessionStorage.getItem("jwt");
     const area = document.getElementById("newEntryErrorBox");
+    const fields = {
+        password: uncontent,
+        title: untitle,
+        username: unuser,
+        website: unwebsite
+    };
 
     try {
         evalContent(untitle);
-        const encrypted = await encryptEntry(encryptionKey, uncontent, untitle, unuser, unwebsite);
+        const encrypted = await encryptEntry(encryptionKey, fields);
         await APIcreateEntry(jwt, encrypted);
         showView("valut");
         window.location.reload();
@@ -65,22 +71,6 @@ document.getElementById("newEntryButton").addEventListener("click", async() => {
             <p class='reg coral'>An error occured while processing your password. Make sure every required(*) box is filled out.</p>`
         )};
 });
-
-async function createEntry(title, content, masterPassword){
-    const jwt = sessionStorage.getItem("jwt");
-    const salt = sessionStorage.getItem("salt");
-    const key = deriveEncryptionKey(masterPassword, salt);
-    const encrypted = await encryptEntry(key ,content);
-    try {
-        const response = await APIcreateEntry(jwt, title, encrypted);
-        return response;
-    }catch (error) {
-        console.log("CATCHING ERROR FROM VALUT.JS");
-    }
-}
-
-
-
 
 function evalContent(content) {
     if (content.length <= 0) {
