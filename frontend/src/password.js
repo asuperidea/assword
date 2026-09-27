@@ -7,10 +7,11 @@ const jwt = sessionStorage.getItem("jwt");
 const errorArea = document.getElementById("passwordErrorArea");
 const passArea = document.getElementById("passwordArea");
 errorArea.replaceChildren();
-let entryId
+let entryId, entryIv
 
 export async function displayPassword(cipher, iv, id){
     entryId = id;
+    entryIv = iv;
     try{
         const decrypted = await decryptEntry(encryptionKey, cipher, iv);
         passArea.innerHTML='';
@@ -43,6 +44,12 @@ export async function displayPassword(cipher, iv, id){
 
 document.getElementById("deleteEntryButton").addEventListener("click", async() => {
     try {
-        APIdeleteEntry()
+        const response = await APIdeleteEntry(jwt, entryId, entryIv);
+        console.log(response);
+        showView("valut");
+        window.location.reload();
     }
-}
+    catch(error){
+        console.log(error);
+    }
+})

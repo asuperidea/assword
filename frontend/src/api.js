@@ -94,7 +94,7 @@ export async function APIdeleteEntry(jwt, entryId, iv) {
     const url = getUrl() + "entry/delete";
     const response = await fetch(url, {
         method: 'DELETE',
-        headers: {'Authorization': 'Bearer '+jwt},
+        headers: {'Authorization': 'Bearer '+jwt, 'Content-Type': 'application/json'},
         body: JSON.stringify({entryId, iv})
     });
 
