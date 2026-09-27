@@ -1,6 +1,7 @@
 import "./signup.js";
 import "./login.js";
 import "./valut.js";
+import "./password.js";
 
 export function showView(viewName) {
     document.querySelectorAll("section").forEach(section => {

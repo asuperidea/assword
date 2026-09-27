@@ -7,8 +7,10 @@ const jwt = sessionStorage.getItem("jwt");
 const errorArea = document.getElementById("passwordErrorArea");
 const passArea = document.getElementById("passwordArea");
 errorArea.replaceChildren();
+let entryId
 
-export async function displayPassword(cipher, iv){
+export async function displayPassword(cipher, iv, id){
+    entryId = id;
     try{
         const decrypted = await decryptEntry(encryptionKey, cipher, iv);
         passArea.innerHTML='';
@@ -37,4 +39,8 @@ export async function displayPassword(cipher, iv){
     catch(error){
         console.log(error);
     }
+}
+
+export async function changePassword(){
+
 }

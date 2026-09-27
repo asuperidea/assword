@@ -28,13 +28,13 @@ try {
 
         passwordCard.addEventListener("click", () => {
             showView("password");
-            displayPassword(entry.cipherText, entry.iv);
+            displayPassword(entry.cipherText, entry.iv, entry.entryId);
         });
         passwordCard.addEventListener("keydown", (event) => {
             if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
                 showView("password");
-                displayPassword(entry.cipherText, entry.iv);
+                displayPassword(entry.cipherText, entry.iv, entry.entryId);
             }
         });
 
