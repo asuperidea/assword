@@ -84,7 +84,14 @@
 
     <section id="passwordView">
         <div id="passwordErrorArea"></div>
-        <div class="passwordArea"id="passwordArea"></div>
+        <div class="passwordArea">
+            <div class="d-flex flex-column align-items-center"id="passwordArea"></div>
+            <div class="passBtnRow d-flex flex-row justify-content-between mx-auto mt-auto mb-3">
+                <button class="basicbtn toValut mt-auto mb-3">Go Back</button>
+                <button class="basicbtn mt-auto mb-3">Change Password</button>
+                <button class="redbtn mt-auto mb-3" id="deleteEntryButton">Delete Password</button>
+            </div>
+        </div>
     </section>
 
     <script type="module" src="src/app.js"></script>

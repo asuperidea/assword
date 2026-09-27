@@ -1,4 +1,4 @@
-import { } from './api.js';
+import { APIdeleteEntry } from './api.js';
 import { decryptEntry, encryptEntry } from './crypto.js';
 import { encryptionKey } from "./shared.js";
 import { showView } from "./app.js";
@@ -41,6 +41,8 @@ export async function displayPassword(cipher, iv, id){
     }
 }
 
-export async function changePassword(){
-
+document.getElementById("deleteEntryButton").addEventListener("click", async() => {
+    try {
+        APIdeleteEntry()
+    }
 }

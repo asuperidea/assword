@@ -90,3 +90,17 @@ export async function APIgetEntries(jwt) {
     }
     return response.json();
 }
+export async function APIdeleteEntry(jwt, entryId, iv) { 
+    const url = getUrl() + "entry/delete";
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {'Authorization': 'Bearer '+jwt},
+        body: JSON.stringify({entryId, iv})
+    });
+
+    if (!response.ok) {
+        console.log("THROWING ERROR FROM API.JS")
+        throw new Error(`Response status: ${response.status}`);
+    }
+    return response.json();
+}
