@@ -76,7 +76,7 @@ html a {
 .textbtn {
     background-color: $dark;
     color: $light;
-    width: 10rem;
+    width: auto;
     height: auto;
     border: none;
     transition: .4s ease all;
@@ -138,17 +138,15 @@ html a {
 .password{
     display: flex;
     flex-direction: row;
-    flex: 1 1 auto;
     width: 100%;
-    justify-content: space-between;
-    align-items: baseline;
-    min-height: 2.4rem;
-    max-height: 3rem;
+    max-width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
     background-color: $dark;
     outline: 1px solid $light;
     border-radius: .3rem;
     color: $light;
-    transition: .2s ease-in;
+    transition: .1s ease-in;
 
     &:hover{
         outline-color: $coral;
@@ -161,6 +159,20 @@ html a {
 
     }
 }
+.passwordArea{
+    width: 80%;
+    margin: auto;
+    margin-top: 6rem;
+    max-width: 50rem;
+    height: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid $coral;
+    border-radius: 1rem;
+}
+
+
 .about {
     margin-top: 9rem;
     width: 90%;

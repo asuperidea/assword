@@ -1,7 +1,8 @@
 import { APIgetEntries, APIcreateEntry } from './api.js';
-import { deriveEncryptionKey, decryptEntry, encryptEntry } from './crypto.js';
+import { decryptEntry, encryptEntry } from './crypto.js';
 import { encryptionKey } from "./shared.js";
 import { showView } from "./app.js";
+import { displayPassword } from "./password.js";
 
 const jwt = sessionStorage.getItem("jwt");
 const area = document.getElementById("valutErrorBox");
@@ -17,13 +18,28 @@ try {
     for (const entry of entries){
         const childDiv = document.createElement("div");
         const decrypted = await decryptEntry(encryptionKey, entry.cipherText, entry.iv);
-        console.log(decrypted);
-        console.log(entries);
-        childDiv.insertAdjacentHTML('beforeend', `
+        const passwordCard = document.createElement("div");
+        passwordCard.className = "password";
+        passwordCard.setAttribute("role", "button");
+        passwordCard.setAttribute("tabindex", "0");
+        passwordCard.innerHTML = `
             <h2 class="reg fs-3">${decrypted.title}</h2>
-            <button type="button" class="textbtn toggle-password">See Password</button>`);
-        childDiv.id=`${entry.cipherText} ${entry.iv}`;
-        childDiv.classList.add("password");
+            <p class="light fs-5">See Password</p>`;
+
+        passwordCard.addEventListener("click", () => {
+            showView("password");
+            displayPassword(entry.cipherText, entry.iv);
+        });
+        passwordCard.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                showView("password");
+                displayPassword(entry.cipherText, entry.iv);
+            }
+        });
+
+        childDiv.appendChild(passwordCard);
+        childDiv.id = `entry${entry.entryId}`;
         passArea.appendChild(childDiv);
     }
 } catch(error) {
@@ -31,7 +47,7 @@ try {
     area.innerHTML='';
     area.insertAdjacentHTML('beforeend', `
         <h2 class="lightclr mt-5 text-center bold">Session Expired!</h2>
-        <p class="reg text-center lightclr">Your Session Has Expired. Please <button class="textbtn toLogIn">Log In Again</button></p>`);
+        <p class="reg text-center lightclr">Your Session Has Expired. Please<button class="textbtn toLogIn">Log In Again</button></p>`);
 }
 
 document.getElementById("startNewPassword").addEventListener("click", async() => {
