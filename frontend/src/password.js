@@ -1,4 +1,4 @@
-import { APIdeleteEntry } from './api.js';
+import { APIdeleteEntry, APIchangeEntry } from './api.js';
 import { decryptEntry, encryptEntry } from './crypto.js';
 import { encryptionKey } from "./shared.js";
 import { showView } from "./app.js";
@@ -20,8 +20,8 @@ export async function displayPassword(cipher, iv, id){
         website = decrypted.website;
         username = decrypted.username;
         password = decrypted.password;
-        passArea.innerHTML='';
-        passArea.innerHTML=('beforeend',`
+        passArea.replaceChildren();
+        passArea.insertAdjacentHTML('beforeend',`
             <p class="fs-2 med lightclr passwordText">${title}</p>
             <p class="fs-4 reg lightclr passwordText">${website}</p>
             <p class="fs-4 reg lightclr passwordText">${username}</p>
@@ -66,9 +66,9 @@ document.getElementById("changeEntryButton").addEventListener("click", async() =
     passArea.insertAdjacentHTML("beforeend", `
     <div class="changePassInputs d-flex flex-column align-items-center">
         <input class="basicinput" value="${title}" placeholder="Password Title" id="changePassTitle">
-        <input class="basicinput" value="${website}" placeholder="Website" id="changePassTitle">
-        <input class="basicinput" value="${username}" placeholder="Username or Email" id="changePassTitle">
-        <input class="basicinput" value="${password}" placeholder="Password" id="changePassTitle">
+        <input class="basicinput" value="${website}" placeholder="Website" id="changePassWebsite">
+        <input class="basicinput" value="${username}" placeholder="Username or Email" id="changePassUser">
+        <input class="basicinput" value="${password}" placeholder="Password" id="changePassword">
     </div>
     <div class="d-flex flex-row justify-content-between" style="width: 70%;">
         <button class="basicbtn mt-auto mb-3" id="saveNewEntryButton">Save New Password</button>
@@ -81,3 +81,29 @@ document.getElementById("changeEntryButton").addEventListener("click", async() =
         });
     });
 })
+
+document.addEventListener("click", async (event) => {
+    const saveButton = event.target.closest("#saveNewEntryButton");
+    if (!saveButton){
+        console.log("notbtn")
+        return
+    };
+
+    try{
+        const fields = {
+            title: document.getElementById("changePassTitle").value,
+            website: document.getElementById("changePassWebsite").value,
+            username: document.getElementById("changePassUser").value,
+            password: document.getElementById("changePassword").value
+        };
+        const encryptedContent = await encryptEntry(encryptionKey, fields);
+        await APIchangeEntry(jwt, encryptedContent, entryId);
+        showView("valut");
+        window.location.reload();
+    } catch (error){
+        errorArea.replaceChildren();
+        errorArea.insertAdjacentHTML("beforeend", `
+            <h1 class="coral fs-1 med">Error!</h1>
+            <p class="coral fs-3 reg">Your password change failed, try logging out and back in.</p>`)
+    }
+});
