@@ -73,8 +73,6 @@ export async function APIcreateEntry(jwt, encryptedContent) {
         throw new Error(`Response status: ${response.status}`);
     }
     return response.json();
-
-
 }
 export async function APIgetEntries(jwt) { 
     const url = getUrl() + "entry/get";
@@ -100,6 +98,23 @@ export async function APIdeleteEntry(jwt, entryId, iv) {
 
     if (!response.ok) {
         console.log("THROWING ERROR FROM API.JS")
+        throw new Error(`Response status: ${response.status}`);
+    }
+    return response.json();
+}
+export async function APIchangeEntry(jwt, encryptedContent, entryId) {
+    const url = getUrl() + "entry/change";
+    const cipherText = encryptedContent.ciphertext;
+    const iv = encryptedContent.iv;
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {'Authorization': 'Bearer '+jwt, 'Content-Type': 'application/json'},
+        body: JSON.stringify({entryId, cipherText, iv})
+    });
+
+    if (!response.ok) {
+        console.log("THROWING ERROR FROM API.JS");
         throw new Error(`Response status: ${response.status}`);
     }
     return response.json();
