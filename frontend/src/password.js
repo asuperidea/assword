@@ -65,10 +65,10 @@ document.getElementById("changeEntryButton").addEventListener("click", async() =
     passArea.replaceChildren();
     passArea.insertAdjacentHTML("beforeend", `
     <div class="changePassInputs d-flex flex-column align-items-center">
-        <input class="basicinput" value="${title}" placeholder="Password Title" id="changePassTitle">
-        <input class="basicinput" value="${website}" placeholder="Website" id="changePassWebsite">
-        <input class="basicinput" value="${username}" placeholder="Username or Email" id="changePassUser">
-        <input class="basicinput" value="${password}" placeholder="Password" id="changePassword">
+        <input class="basicinput" value='${title}' placeholder="Password Title" id="changePassTitle">
+        <input class="basicinput" value='${website}' placeholder="Website" id="changePassWebsite">
+        <input class="basicinput" value='${username}' placeholder="Username or Email" id="changePassUser">
+        <input class="basicinput" value='${password}' placeholder="Password" id="changePassword">
     </div>
     <div class="d-flex flex-row justify-content-between" style="width: 70%;">
         <button class="basicbtn mt-auto mb-3" id="saveNewEntryButton">Save New Password</button>
