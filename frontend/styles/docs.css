@@ -1,0 +1,72 @@
+body {
+  background-color: #081012 !important;
+}
+
+section {
+  width: 70%;
+}
+
+html a {
+  color: #F6EFEE;
+  transition: 0.2s ease all;
+}
+html a:hover {
+  color: #EC7357;
+}
+html a:active {
+  color: #48A9A6;
+}
+
+.light {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 300;
+}
+
+.reg {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 400;
+}
+
+.med {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 500;
+}
+
+.semi {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 600;
+}
+
+.bold {
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 700;
+}
+
+.txtcoral {
+  color: #EC7357;
+}
+
+.txtlight {
+  color: #F6EFEE;
+}
+
+p {
+  color: #F6EFEE;
+  font-size: 1.2rem;
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 200;
+}
+
+pre {
+  color: #EC7357;
+  background-color: #183837;
+  width: 50%;
+  max-width: 40rem;
+  min-width: 30rem;
+}
+
+code {
+  font-size: 1.2rem;
+  color: #EC7357 !important;
+  background-color: #183837;
+}/*# sourceMappingURL=docs.css.map */
