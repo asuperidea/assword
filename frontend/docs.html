@@ -51,8 +51,15 @@
         <h2 class="med txtcoral fs-2 mt-5">Endpoints</h2>
         <p>The API has seven endpoints to call.</p>
 
-        <h3 class="med txtcoral fs-3 mt-2">.../signup/</h3>
-        <p>Signup accepts an <code>email</code>, <code>salt</code>, and <code>authkey</code></p>
+        <h3 class="med txtcoral mt-2 fs-3">.../signup</h3>
+        <p>Signup accepts an <code>email</code>, <code>salt</code>, and <code>authkey</code> via a request body. /signup returns the <code>userId</code> and <code>email</code> in the response body.</p>
+
+        <h3 class="med txtcoral mt-2 fs-3">.../login/start</h3>
+        <p>Login Start accepts a <code>userEmail</code> via a query parameters. /login/start returns the users <code>salt</code> in the response body.</p>
+        <p> It is important to note that the default backend will fake a salt to avoid leaking what emails are in use. Each fake salt is consistantly made based on the query <code>userEmail</code>.</p>
+
+        <h3 class="med txtcoral mt-2 fs-3">.../login/validate</h3>
+        <p>Login Validate accepts a <code>userEmail</code> and <code>authKey</code> via query parameters. /login/validate returns a signed JWT used for all other endpoints</p>
     </section>
 </body>
 </html>
