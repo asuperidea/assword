@@ -22,7 +22,7 @@ export async function displayPassword(cipher, iv, id){
         password = decrypted.password;
         passArea.replaceChildren();
         passArea.insertAdjacentHTML('beforeend',`
-            <p class="fs-2 med lightclr passwordText">${title}</p>
+            <p class="fs-2 med lightclr passwordText text-center">${title}</p>
             <p class="fs-4 reg lightclr passwordText">${website}</p>
             <p class="fs-4 reg lightclr passwordText">${username}</p>
             <div class="showPass passwordText" role="button" tabindex="0">

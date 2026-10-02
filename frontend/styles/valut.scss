@@ -195,10 +195,11 @@ html a {
     width: 80%;
 }
 .passBtnRow{
-    width: 80%;
+    max-width: 80%;
+    flex-direction: column;
     height: auto;
     display: flex; 
-    flex-direction: row;
+    gap: .4rem;
 }
 .changePassInputs{
     width: 100%;

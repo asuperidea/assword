@@ -19,7 +19,6 @@ try {
         const childDiv = document.createElement("div");
         const decrypted = await decryptEntry(encryptionKey, entry.cipherText, entry.iv);
         const passwordCard = document.createElement("div");
-        passwordCard.className = "password";
         passwordCard.setAttribute("role", "button");
         passwordCard.setAttribute("tabindex", "0");
         passwordCard.innerHTML = `
@@ -40,6 +39,7 @@ try {
 
         childDiv.appendChild(passwordCard);
         childDiv.id = `entry${entry.entryId}`;
+        childDiv.className = "password";
         passArea.appendChild(childDiv);
     }
 } catch(error) {

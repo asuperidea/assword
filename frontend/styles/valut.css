@@ -192,10 +192,11 @@ html a:active {
 }
 
 .passBtnRow {
-  width: 80%;
+  max-width: 80%;
+  flex-direction: column;
   height: auto;
   display: flex;
-  flex-direction: row;
+  gap: 0.4rem;
 }
 
 .changePassInputs {
