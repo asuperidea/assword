@@ -53,6 +53,7 @@ document.getElementById("deleteEntryButton").addEventListener("click", async() =
         const response = await APIdeleteEntry(jwt, entryId, entryIv);
         console.log(response);
         showView("valut");
+        passArea.replaceChildren();
         window.location.reload();
     }
     catch(error){
@@ -77,6 +78,7 @@ document.getElementById("changeEntryButton").addEventListener("click", async() =
     document.querySelectorAll(".toValut").forEach(button => {
         button.addEventListener("click", () => {
             showView("valut")
+            passArea.replaceChildren();
             window.location.reload();
         });
     });
@@ -98,6 +100,7 @@ document.addEventListener("click", async (event) => {
         };
         const encryptedContent = await encryptEntry(encryptionKey, fields);
         await APIchangeEntry(jwt, encryptedContent, entryId);
+        passArea.replaceChildren();
         showView("valut");
         window.location.reload();
     } catch (error){
