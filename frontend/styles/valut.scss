@@ -159,8 +159,7 @@ html a {
     display: flex;
     flex-direction: row;
     width: 100%;
-    max-width: 100%;
-    min-width: 0;
+    max-width: 45rem;
     flex: 1 1 auto;
     background-color: $dark;
     outline: 1px solid $light;

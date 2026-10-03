@@ -20,10 +20,11 @@ try {
         const decrypted = await decryptEntry(encryptionKey, entry.cipherText, entry.iv);
         const passwordCard = document.createElement("div");
         passwordCard.setAttribute("role", "button");
+        passwordCard.setAttribute("style", "width: 100%;");
         passwordCard.setAttribute("tabindex", "0");
         passwordCard.innerHTML = `
-            <h2 class="reg fs-3">${decrypted.title}</h2>
-            <p class="light fs-5">See Password</p>`;
+            <h2 class="reg fs-3 text-center">${decrypted.title}</h2>
+            <p class="light fs-5 ms-3 text-center">See Password</p>`;
 
         passwordCard.addEventListener("click", () => {
             showView("password");
