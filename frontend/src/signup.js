@@ -37,6 +37,7 @@ document.getElementById("startSignUp").addEventListener("click", async() => {
             <button class="basicbtn lightclr underline-slide toLogIn">Log In</button>`);
         const loginButton = area.querySelector('.toLogIn');
         loginButton?.addEventListener('click', () => showView('login'));
+        localStorage.setItem('hasAccount', "true");
     } catch(error) {
         area.innerHTML='';
         area.insertAdjacentHTML('beforeend', `
