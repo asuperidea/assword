@@ -45,6 +45,7 @@ try {
     }
 } catch(error) {
     console.log("CATCHING ERROR FROM VALUT.JS");
+    console.log(error);
     area.innerHTML='';
     area.insertAdjacentHTML('beforeend', `
         <h2 class="lightclr mt-5 text-center bold">Session Expired or Invalid URL</h2>

@@ -126,7 +126,7 @@ def changeEntry(body:EntryChange, credentials: HTTPAuthorizationCredentials = De
         db.refresh(entry)
         return entry
     else:
-        raise HTTPException(status_code=400, detail="Incorrect User ID")
+        raise HTTPException(status_code=403, detail="Incorrect User ID")
  
 
 @app.delete("/entry/delete")
@@ -138,4 +138,4 @@ def deleteEntry(body:EntryDelete, credentials: HTTPAuthorizationCredentials = De
         db.commit()
         return "Entry Deleted"
     else:
-        raise HTTPException(status_code=400, detail="Entry not deleted")
+        raise HTTPException(status_code=403, detail="Entry not deleted")

@@ -84,3 +84,19 @@ code{
 li{
     color: $light;
 }
+.textbtn {
+    background-color: $dark;
+    color: $light;
+    width: auto;
+    height: auto;
+    border: none;
+    transition: .4s ease all;
+
+    &:hover{
+        color: $coral;
+        text-decoration: underline;
+    }
+    &:active{
+        color: $teal;
+    }
+}

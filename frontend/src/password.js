@@ -87,8 +87,7 @@ document.getElementById("changeEntryButton").addEventListener("click", async() =
 document.addEventListener("click", async (event) => {
     const saveButton = event.target.closest("#saveNewEntryButton");
     if (!saveButton){
-        console.log("notbtn")
-        return
+        return;
     };
 
     try{
