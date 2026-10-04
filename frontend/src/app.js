@@ -60,7 +60,7 @@ document.querySelectorAll(".setUrl").forEach(button => {
     });
 });
 
-if (!localStorage.getItem('url')){
+if (!localStorage.getItem('url') && localStorage.getItem('hasAccount') == 'true'){
     showView("noUrl");
 } 
 else if (sessionStorage.getItem("jwt")) {

@@ -20,7 +20,8 @@ document.getElementById("startLogIn").addEventListener("click", async() => {
         
         const jwt = await APIloginValidate(email, authKey);
         sessionStorage.setItem("jwt", jwt);
-
+        localStorage.setItem('hasAccount', "true");
+        
         showView("valut");
         setEncryptionKey(await deriveEncryptionKey(master, salt));
         window.location.reload()
