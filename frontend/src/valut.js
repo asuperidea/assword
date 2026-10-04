@@ -47,8 +47,9 @@ try {
     console.log("CATCHING ERROR FROM VALUT.JS");
     area.innerHTML='';
     area.insertAdjacentHTML('beforeend', `
-        <h2 class="lightclr mt-5 text-center bold">Session Expired!</h2>
-        <p class="reg text-center lightclr">Your Session Has Expired. Please<button class="textbtn toLogIn">Log In Again</button></p>`);
+        <h2 class="lightclr mt-5 text-center bold">Session Expired or Invalid URL</h2>
+        <p class="reg text-center lightclr">Your Session Has Expired. Please<button class="textbtn toLogIn">Log In Again</button></p>
+        <p class="reg text-center lightclr">Your URL '${localStorage.getItem('url')}' may not be working. You can try and<button class="textbtn ridURL">Reset It</p>`);
 }
 
 document.getElementById("startNewPassword").addEventListener("click", async() => {

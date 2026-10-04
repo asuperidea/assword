@@ -49,8 +49,14 @@ document.querySelectorAll(".ridURL").forEach(button => {
 });
 document.querySelectorAll(".setUrl").forEach(button => {
     button.addEventListener("click", () => {
-        localStorage.setItem("url", setUrl(document.getElementById("signup-url").value));
-        showView("login")
+        console.log(setUrl(document.getElementById("newUrlInput").value))
+        localStorage.setItem("url", setUrl(document.getElementById("newUrlInput").value));
+        if (sessionStorage.getItem("jwt")){
+            showView("valut");
+        } else {
+            showView("landing");
+        }
+        window.location.reload();
     });
 });
 
