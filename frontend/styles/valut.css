@@ -212,4 +212,9 @@ html a:active {
   margin-top: 9rem;
   width: 90%;
   max-width: 30rem;
+}
+
+.bottomdiv {
+  width: 50%;
+  background-color: #081012;
 }/*# sourceMappingURL=valut.css.map */

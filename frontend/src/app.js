@@ -41,6 +41,12 @@ document.querySelectorAll(".ridJWT").forEach(button => {
         window.location.reload();
     });
 });
+document.querySelectorAll(".ridURL").forEach(button => {
+    button.addEventListener("click", () => {
+        localStorage.removeItem("url");
+        window.location.reload();
+    });
+});
 document.querySelectorAll(".setUrl").forEach(button => {
     button.addEventListener("click", () => {
         localStorage.setItem("url", setUrl(document.getElementById("signup-url").value));
@@ -48,11 +54,12 @@ document.querySelectorAll(".setUrl").forEach(button => {
     });
 });
 
-if (sessionStorage.getItem("jwt")){
-    showView("valut");
-} else if (!localStorage.getItem('url')){
+if (!localStorage.getItem('url')){
     showView("noUrl");
 } 
+else if (sessionStorage.getItem("jwt")) {
+    showView("valut");
+}
 else {
     showView("landing");
 }

@@ -1,8 +1,7 @@
 function getUrl() {
-    const url = (localStorage.getItem('url') || sessionStorage.getItem('url') || '').trim();
+    const url = (localStorage.getItem('url')).trim();
     const normalizedUrl = url ? url.replace(/\/+$/, '') + '/' : '';
-    sessionStorage.setItem('url', normalizedUrl);
-    console.log(normalizedUrl);
+    localStorage.setItem('url', normalizedUrl);
     return normalizedUrl;
 }
 export async function APIloginStart(email) {
