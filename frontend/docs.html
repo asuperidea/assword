@@ -51,15 +51,27 @@
         <h2 class="med txtcoral fs-2 mt-5">Endpoints</h2>
         <p>The API has seven endpoints to call.</p>
 
-        <h3 class="med txtcoral mt-2 fs-3">.../signup</h3>
+        <h3 class="mt-2">.../signup</h3>
         <p>Signup accepts an <code>email</code>, <code>salt</code>, and <code>authkey</code> via a request body. /signup returns the <code>userId</code> and <code>email</code> in the response body.</p>
 
-        <h3 class="med txtcoral mt-2 fs-3">.../login/start</h3>
+        <h3 class="mt-2">.../login/start</h3>
         <p>Login Start accepts a <code>userEmail</code> via a query parameters. /login/start returns the users <code>salt</code> in the response body.</p>
-        <p> It is important to note that the default backend will fake a salt to avoid leaking what emails are in use. Each fake salt is consistantly made based on the query <code>userEmail</code>.</p>
+        <p> It is important to note that the default backend will fake a salt to avoid leaking what emails are in use. Each fake salt is consistantly made based on the query <code>userEmail</code>. See <code>fakesalts.py</code></p>
 
-        <h3 class="med txtcoral mt-2 fs-3">.../login/validate</h3>
-        <p>Login Validate accepts a <code>userEmail</code> and <code>authKey</code> via query parameters. /login/validate returns a signed JWT used for all other endpoints</p>
+        <h3 class="mt-2">.../login/validate</h3>
+        <p>Login Validate accepts a <code>userEmail</code> and <code>authKey</code> via query parameters. /login/validate returns a signed JWT used for all other endpoints.</p>
+        <p>Login Validate may return a <b>400 Error</b> if the email or authKey are invaild.</p>
+
+        <h3 class="mt-2">.../entry/get</h3>
+        <p>/entry/get requires a valid JWT in the HTTPBearer</p>
+        <p>/entry/get returns an array of objects. Each object contains an <code>entryId</code>, <code>ciphertext</code>, and <code>iv</code>.</p>
+        <p>The default frontend uses the <code>iv</code> to decrypted the <code>ciphertext</code> into a object containing a title, website, username, and password.</p>
+        <p>/entry/get will return a <ul>
+            <li><b>400</b> If the JWT is invalid or expired</li>
+            <li><b>401</b> If the JWT is missing</li>
+        </ul></p>
+
+        <h3></h3>
     </section>
 </body>
 </html>

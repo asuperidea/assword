@@ -63,6 +63,12 @@ p{
     font-family: $font-stack;
     font-weight: 200;
 }
+h3{
+    color: $coral !important;
+    font-family: $font-stack;
+    font-weight: 500;
+    font-size: 2rem;
+}
 pre{
     color: $coral;
     background-color: $darkteal;
@@ -74,4 +80,7 @@ code{
     font-size: 1.2rem;
     color: $coral !important;
     background-color: $darkteal
+}
+li{
+    color: $light;
 }

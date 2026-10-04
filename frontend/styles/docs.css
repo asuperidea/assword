@@ -57,6 +57,13 @@ p {
   font-weight: 200;
 }
 
+h3 {
+  color: #EC7357 !important;
+  font-family: Space Grotesk, sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+}
+
 pre {
   color: #EC7357;
   background-color: #183837;
@@ -69,4 +76,8 @@ code {
   font-size: 1.2rem;
   color: #EC7357 !important;
   background-color: #183837;
+}
+
+li {
+  color: #F6EFEE;
 }/*# sourceMappingURL=docs.css.map */
