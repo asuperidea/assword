@@ -1,7 +1,8 @@
 import { APIgetEntries, APIcreateEntry } from './api.js';
-import { deriveEncryptionKey, decryptEntry, encryptEntry } from './crypto.js';
+import { decryptEntry, encryptEntry } from './crypto.js';
 import { encryptionKey } from "./shared.js";
 import { showView } from "./app.js";
+import { displayPassword } from "./password.js";
 
 const jwt = sessionStorage.getItem("jwt");
 const area = document.getElementById("valutErrorBox");
@@ -10,33 +11,46 @@ area.replaceChildren();
 
 try {
     const entries = await APIgetEntries(jwt);
-    for (let i=0; i< entries.length; i++){
-        const childDiv = document.createElement("div");
-        const decryptedContent = await decryptEntry(encryptionKey, entries[i].content, entries[i].iv);
-
-        childDiv.insertAdjacentHTML('beforeend', `
-            <h2 class="semi fs-3">${entries[i].title}</h2>
-            <button type="button" class="txt-btn toggle-password">Show</button>
-            <p class="password-content" hidden>${decryptedContent}</p>`);
-        childDiv.id=`passwordDiv${i}`;
-        childDiv.classList.add("password");
-        childDiv.querySelector(".toggle-password").addEventListener("click", (event) => {
-            const content = childDiv.querySelector(".password-content");
-            content.hidden = !content.hidden;
-            event.currentTarget.textContent = content.hidden ? "Show" : "Hide";
-        });
-        passArea.appendChild(childDiv);
-    }
     if (entries.length == 0){
         passArea.insertAdjacentHTML('beforeend',`
-            <p class='text-center'>You Dont Have Any Passwords</p>`);
+            <p class='coral light fs-6 text-center'>You Dont Have Any Passwords</p>`);
     }
-} catch (error) {
+    for (const entry of entries){
+        const childDiv = document.createElement("div");
+        const decrypted = await decryptEntry(encryptionKey, entry.cipherText, entry.iv);
+        const passwordCard = document.createElement("div");
+        passwordCard.setAttribute("role", "button");
+        passwordCard.setAttribute("style", "width: 100%;");
+        passwordCard.setAttribute("tabindex", "0");
+        passwordCard.innerHTML = `
+            <h2 class="reg fs-3 text-center">${decrypted.title}</h2>
+            <p class="light fs-5 ms-3 text-center">See Password</p>`;
+
+        passwordCard.addEventListener("click", () => {
+            showView("password");
+            displayPassword(entry.cipherText, entry.iv, entry.entryId);
+        });
+        passwordCard.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                showView("password");
+                displayPassword(entry.cipherText, entry.iv, entry.entryId);
+            }
+        });
+
+        childDiv.appendChild(passwordCard);
+        childDiv.id = `entry${entry.entryId}`;
+        childDiv.className = "password";
+        passArea.appendChild(childDiv);
+    }
+} catch(error) {
     console.log("CATCHING ERROR FROM VALUT.JS");
+    console.log(error);
     area.innerHTML='';
     area.insertAdjacentHTML('beforeend', `
-        <h2>Session Expired!</h2>
-        <p class="reg text-center">Your Session Has Expired. Please <button class="txt-btn underline-slide" id="toLogIn">Log In Again</button></p>`);
+        <h2 class="lightclr mt-5 text-center bold">Session Expired or Invalid URL</h2>
+        <p class="reg text-center lightclr">Your Session Has Expired. Please<button class="textbtn toLogIn">Log In Again</button></p>
+        <p class="reg text-center lightclr">Your URL '${localStorage.getItem('url')}' may not be working. You can try and<button class="textbtn ridURL">Reset It</p>`);
 }
 
 document.getElementById("startNewPassword").addEventListener("click", async() => {
@@ -44,17 +58,23 @@ document.getElementById("startNewPassword").addEventListener("click", async() =>
 });
 
 document.getElementById("newEntryButton").addEventListener("click", async() => {
-    const title = document.getElementById("title").value;
-    const unencrypted = document.getElementById("content").value;
+    const untitle = document.getElementById("title").value;
+    const uncontent = document.getElementById("content").value;
+    const unuser = document.getElementById("username").value;
+    const unwebsite = document.getElementById("website").value;
     const jwt = sessionStorage.getItem("jwt");
     const area = document.getElementById("newEntryErrorBox");
-
-    const encrypted = await encryptEntry(encryptionKey, unencrypted);
+    const fields = {
+        password: uncontent,
+        title: untitle,
+        username: unuser,
+        website: unwebsite
+    };
 
     try {
-        evalContent(title);
-        evalContent(evalContent);
-        await APIcreateEntry(jwt, title, encrypted);
+        evalContent(untitle);
+        const encrypted = await encryptEntry(encryptionKey, fields);
+        await APIcreateEntry(jwt, encrypted);
         showView("valut");
         window.location.reload();
     }catch (error) {
@@ -62,25 +82,9 @@ document.getElementById("newEntryButton").addEventListener("click", async() => {
         area.innerHTML = '';
         area.insertAdjacentHTML('beforeend', `
             <h2 class='semi coral'>Error!</h2>
-            <p class='reg coral'>An error occured while processing your password. Make sure every box is filled out.</p>`
+            <p class='reg coral'>An error occured while processing your password. Make sure every required(*) box is filled out.</p>`
         )};
 });
-
-async function createEntry(title, content, masterPassword){
-    const jwt = sessionStorage.getItem("jwt");
-    const salt = sessionStorage.getItem("salt");
-    const key = deriveEncryptionKey(masterPassword, salt);
-    const encrypted = await encryptEntry(key ,content);
-    try {
-        const response = await APIcreateEntry(jwt, title, encrypted);
-        return response;
-    }catch (error) {
-        console.log("CATCHING ERROR FROM VALUT.JS");
-    }
-}
-
-
-
 
 function evalContent(content) {
     if (content.length <= 0) {

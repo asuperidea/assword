@@ -5,9 +5,8 @@ from typing import Annotated, List
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
-from models import Users, Entries
+from models import Users, Entries, UserBase, UserPublic, UserCreate, UserSalt, EntryCreate, EntryGet, EntryBase, EntryDelete, EntryChange
 from database import engineUsers, engineEntries, SessionUsers, SessionEntries, Base
-import hashlib
 import os
 from dotenv import load_dotenv
 from jwtfuncs import createJWT, decodeJWT
@@ -40,54 +39,6 @@ JWT_KEY = os.getenv("JWT_KEY")
 if not JWT_KEY:
     raise RuntimeError("JWT_KEY environment variable is not set")
 
-class UserBase(BaseModel):
-    userId: int
-    email: str
-    salt: str
-    authKey: str
-
-    class Config:
-        from_attributes = True
-
-class UserPublic(BaseModel):
-    userId: int
-    email: str
-
-    class Config:
-        from_attributes = True
-
-class UserCreate(BaseModel):
-    email: str
-    salt: str
-    authKey: str
-
-class UserSalt(BaseModel):
-    salt: str
-
-    class Config:
-            from_attributes = True
-
-class UserValidate(BaseModel):
-    email:str
-    authKey:str
-
-class EntryCreate(BaseModel):
-    title: str
-    content: str
-    iv: str
-
-class EntryGet(BaseModel):
-    entryId: int
-    title: str
-    content: str
-    iv: str
-
-class EntryBase(BaseModel):
-    entryId: int
-    userId: int
-    title: str
-    content: str
-
 def get_db_users():
     db_users = SessionUsers() 
     try:
@@ -101,6 +52,15 @@ def get_db_entries():
         yield db_entries
     finally:
         db_entries.close()
+
+def validateJWT(token: str) -> int:
+    decodedJWT = decodeJWT(token, JWT_KEY)
+    if isinstance(decodedJWT, dict) and decodedJWT.get("sub") == "Log In Validation":
+        return decodedJWT["id"]
+    if decodedJWT == "Expired Token":
+        raise HTTPException(status_code=400, detail="Expired JWT")
+    raise HTTPException(status_code=400, detail="Invalid JWT")
+
 
 @app.get("/")
 def root():
@@ -139,27 +99,43 @@ def signup(user: UserCreate, db:Session = Depends(get_db_users)):
 
 @app.post("/entry/new")
 def newEntry(entry:EntryCreate, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
-    decodedJWT = decodeJWT(credentials.credentials, JWT_KEY)
-    if isinstance(decodedJWT, str):
-        raise HTTPException(status_code=400, detail="Invalid JWT")
-    elif decodedJWT["sub"] == "Log In Validation":
-        newEntry = Entries(**entry.model_dump())
-        newEntry.userId = decodedJWT["id"]
-        db.add(newEntry)
-        db.commit()
-        db.refresh(newEntry)
-        return newEntry
-    else:
-        raise HTTPException(status_code=400, detail="Invalid JWT")
+    userid = validateJWT(credentials.credentials)
+    newEntry = Entries(**entry.model_dump())
+    newEntry.userId = userid
+    db.add(newEntry)
+    db.commit()
+    db.refresh(newEntry)
+    return newEntry
 
 @app.get("/entry/get", response_model=List[EntryGet])
 def getEntries(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
-    decodedJWT = decodeJWT(credentials.credentials, JWT_KEY)
-    if isinstance(decodedJWT, dict):
-        id = decodedJWT["id"]
-        userEntries = db.query(Entries).filter(Entries.userId == id).all()
-        return userEntries
-    elif decodedJWT == "Expired Token":
-        raise HTTPException(status_code=400, detail="Expired JWT")
+    userid = validateJWT(credentials.credentials)
+    userEntries = db.query(Entries).filter(Entries.userId == userid).all()
+    return userEntries
+
+@app.post("/entry/change")
+def changeEntry(body:EntryChange, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
+    userid = validateJWT(credentials.credentials)
+    entry = db.query(Entries).filter(Entries.entryId == body.entryId).first()
+    if entry is None:
+        raise HTTPException(status_code=404, detail="Entry not found")
+    if int(userid) == entry.userId:
+        entry.cipherText = body.cipherText
+        entry.iv = body.iv
+        db.commit()
+        db.refresh(entry)
+        return entry
     else:
-        raise HTTPException(status_code=400, detail="Invalid JWT")
+        raise HTTPException(status_code=403, detail="Incorrect User ID")
+ 
+
+@app.delete("/entry/delete")
+def deleteEntry(body:EntryDelete, credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db:Session = Depends(get_db_entries)):
+    userid = validateJWT(credentials.credentials)
+    entry = db.query(Entries).filter(Entries.entryId == body.entryId).first()
+    if entry.userId == int(userid) and entry.iv == body.iv:
+        db.delete(entry)
+        db.commit()
+        return "Entry Deleted"
+    else:
+        raise HTTPException(status_code=403, detail="Entry not deleted")

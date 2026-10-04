@@ -27,8 +27,8 @@ document.getElementById("startLogIn").addEventListener("click", async() => {
     } catch(error){
         area.innerHTML="";
         area.insertAdjacentHTML('beforeend', `
-            <h2 class="bold fs-5">Log In Error!</h2>
-            <p class="reg text-center">We couldn't validate your login. Check for typos and try again. If you don't have an account sign up!</p>`);
+            <h2 class="bold lightclr fs-5">Log In Error!</h2>
+            <p class="reg lightclr text-center">We couldn't validate your login. Check for typos and try again. If you don't have an account sign up!</p>`);
     }
 
 });
@@ -74,7 +74,7 @@ export async function runLogin() {
         area.innerHTML = '';
         area.insertAdjacentHTML('beforeend', `
             <div style="width=100%; height: 4rem; background-color: rgb(0,255,0, 50)">
-                <h2>Login Success</h2>
+                <h2 class="bold fs-2 lightclr">Login Success</h2>
             </div>
         `);
         window.location.href = "vault";

@@ -1,9 +1,11 @@
-import { encryptEntry, deriveEncryptionKey } from './crypto.js';
-
-const baseURL = "https://assword-backend.simoncrystal.dev/"
-
+function getUrl() {
+    const url = (localStorage.getItem('url')).trim();
+    const normalizedUrl = url ? url.replace(/\/+$/, '') + '/' : '';
+    localStorage.setItem('url', normalizedUrl);
+    return normalizedUrl;
+}
 export async function APIloginStart(email) {
-    const url = baseURL + "login/start?userEmail=" + encodeURIComponent(email);
+    const url = getUrl() + "login/start?userEmail=" + encodeURIComponent(email);
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -15,12 +17,11 @@ export async function APIloginStart(email) {
 
     sessionStorage.setItem("email", email);
     sessionStorage.setItem("salt", data.salt);
-  
     return data.salt;
 }
 
 export async function APIloginValidate(email, authKey) {
-    const url = baseURL + "login/validate" + 
+    const url = getUrl() + "login/validate" + 
     "?userEmail="+ 
     encodeURIComponent(email)+ 
     "&userAuth="+
@@ -40,10 +41,12 @@ export async function APIloginValidate(email, authKey) {
 
 
 export async function APIsignup(email, salt, authKey) {
-    const response = await fetch(baseURL + "signup", {
+    const url = getUrl() + "signup";
+    console.log(url);
+    const response = await fetch(url, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ email, salt, authKey }),
+        body: JSON.stringify({email, salt, authKey }),
     });
 
     if (!response.ok) {
@@ -52,15 +55,16 @@ export async function APIsignup(email, salt, authKey) {
     }    
     return response.json();
   }
-export async function APIcreateEntry(jwt, title, encryptedContent) {
-    const url = baseURL + "entry/new";
-    const content = encryptedContent.ciphertext;
+
+export async function APIcreateEntry(jwt, encryptedContent) {
+    const url = getUrl() + "entry/new";
+    const cipherText = encryptedContent.ciphertext;
     const iv = encryptedContent.iv;
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {'Authorization': 'Bearer '+jwt, 'Content-Type': 'application/json'},
-        body: JSON.stringify({title, content, iv})
+        body: JSON.stringify({cipherText, iv})
     });
 
     if (!response.ok) {
@@ -68,11 +72,9 @@ export async function APIcreateEntry(jwt, title, encryptedContent) {
         throw new Error(`Response status: ${response.status}`);
     }
     return response.json();
-
-
 }
 export async function APIgetEntries(jwt) { 
-    const url = baseURL + "entry/get";
+    const url = getUrl() + "entry/get";
 
     const response = await fetch(url, {
         method: 'GET',
@@ -81,6 +83,37 @@ export async function APIgetEntries(jwt) {
 
     if (!response.ok) {
         console.log("THROWING ERROR FROM API.JS")
+        throw new Error(`Response status: ${response.status}`);
+    }
+    return response.json();
+}
+export async function APIdeleteEntry(jwt, entryId, iv) { 
+    const url = getUrl() + "entry/delete";
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {'Authorization': 'Bearer '+jwt, 'Content-Type': 'application/json'},
+        body: JSON.stringify({entryId, iv})
+    });
+
+    if (!response.ok) {
+        console.log("THROWING ERROR FROM API.JS")
+        throw new Error(`Response status: ${response.status}`);
+    }
+    return response.json();
+}
+export async function APIchangeEntry(jwt, encryptedContent, entryId) {
+    const url = getUrl() + "entry/change";
+    const cipherText = encryptedContent.ciphertext;
+    const iv = encryptedContent.iv;
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {'Authorization': 'Bearer '+jwt, 'Content-Type': 'application/json'},
+        body: JSON.stringify({entryId, cipherText, iv})
+    });
+
+    if (!response.ok) {
+        console.log("THROWING ERROR FROM API.JS");
         throw new Error(`Response status: ${response.status}`);
     }
     return response.json();

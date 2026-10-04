@@ -38,7 +38,7 @@ export async function deriveEncryptionKey(masterPassword, salt) {
     return btoa(String.fromCharCode(...new Uint8Array(derivada)));
 }
 
-export async function encryptEntry(encryptionKey, plainText) {
+export async function encryptEntry(encryptionKey, fields) {
   const encoder = new TextEncoder();
   
   const iv = window.crypto.getRandomValues(new Uint8Array(12));
@@ -53,6 +53,8 @@ export async function encryptEntry(encryptionKey, plainText) {
     ['encrypt']
   );
 
+  const plainText = JSON.stringify(fields);
+
   const encryptedBuffer = await window.crypto.subtle.encrypt(
     { name: 'AES-GCM', iv: iv },
     key,
@@ -61,9 +63,7 @@ export async function encryptEntry(encryptionKey, plainText) {
 
   const encryptedBytes = new Uint8Array(encryptedBuffer);
   const ivString = btoa(String.fromCharCode(...iv));
-  const encryptedString = btoa(String.fromCharCode(...encryptedBytes));
-
-  return { iv: ivString, ciphertext: encryptedString };
+  const encryptedString = btoa(String.fromCharCode(...encryptedBytes));  return { iv: ivString, ciphertext: encryptedString };
 }
 
 export async function decryptEntry(encryptionKey, ciphertext, iv) {
@@ -89,7 +89,8 @@ export async function decryptEntry(encryptionKey, ciphertext, iv) {
     ciphertextBuffer
   );
 
-  return new TextDecoder().decode(decrypted);
+  const decryptedJSON = new TextDecoder().decode(decrypted);
+  return JSON.parse(decryptedJSON);
 }
 
 export function generateSalt() { 

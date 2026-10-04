@@ -1,0 +1,102 @@
+@use "sass:list";
+@use "sass:color";
+
+$font-stack: Space Grotesk, sans-serif;
+
+$dark: #081012;
+$light: #F6EFEE;
+$coral: #EC7357;
+$teal: #48A9A6;
+$darkteal: #183837;
+
+
+body {
+    background-color: $dark !important;
+}
+section{
+    width: 70%;
+}
+html a {
+    color: $light;
+    transition: .2s ease all;
+
+    &:hover {
+        color: $coral;
+    }
+    &:active {
+        color: $teal;
+    }
+}
+
+
+.light{
+  font-family: $font-stack;
+  font-weight: 300;
+}
+.reg{
+  font-family: $font-stack;
+  font-weight: 400;
+}
+.med{
+  font-family: $font-stack;
+  font-weight: 500;
+}
+.semi{
+  font-family: $font-stack;
+  font-weight: 600;
+}
+.bold{
+  font-family: $font-stack;
+  font-weight: 700;
+}
+
+.txtcoral{
+    color: $coral;
+}
+.txtlight{
+    color: $light;
+}
+
+p{
+    color: $light;
+    font-size: 1.2rem;
+    font-family: $font-stack;
+    font-weight: 200;
+}
+h3{
+    color: $coral !important;
+    font-family: $font-stack;
+    font-weight: 500;
+    font-size: 2rem;
+}
+pre{
+    color: $coral;
+    background-color: $darkteal;
+    width: 50%;
+    max-width: 40rem;
+    min-width: 30rem;
+}
+code{
+    font-size: 1.2rem;
+    color: $coral !important;
+    background-color: $darkteal
+}
+li{
+    color: $light;
+}
+.textbtn {
+    background-color: $dark;
+    color: $light;
+    width: auto;
+    height: auto;
+    border: none;
+    transition: .4s ease all;
+
+    &:hover{
+        color: $coral;
+        text-decoration: underline;
+    }
+    &:active{
+        color: $teal;
+    }
+}

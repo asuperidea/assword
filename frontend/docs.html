@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+    </style>
+    <link rel="stylesheet" href="styles/docs.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="icon" href="./images/favicon.png">
+    <title>Assword | Docs</title>
+</head>
+<body>
+    <section id="head" class="mx-auto mt-5">
+        <button class="textbtn"><a href="index.html">Go Back</a></button>
+        <h1 class="med txtcoral fs-1">Assword Documentation</h1>
+        <p>Full guide to setting up your own backend server</p>
+        <p>You can see the full source code at the <a href="https://github.com/asuperidea/assword/">repo</a></p>
+        <p>Assword was built for <a href="https://cloudfall.hackclub.com/">Hack Club Cloudfall</a></p>
+    </section>
+    <section id="setup" class="mx-auto mt-5">
+        <h1 class="med txtcoral fs-1">Backend</h1>
+        <h2 class="med txtcoral fs-2 mt-4">Setup</h2>
+        <p>If you would like to set up your own backend:</p>
+        <p>Clone the <a href="https://github.com/asuperidea/assword/tree/main/backend/">backend</a>.</p>
+        <p>Run the following commands:</p>
+        <pre style="font-size: 1.2rem;"><code>    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    uvicorn main:app --reload</code></pre>
+        <p>Create a .env file and add the following:</p>
+        <pre style="font-size: 1.2rem;"><code>    JWT_KEY="" # Any string you would like</code></pre>
+
+        <h2 class="med txtcoral fs-2 mt-5">Directory</h2>
+        <p>Each Python file handles a differnt function.</p>
+        <p>The .env file holds your JWT secret, never change it unless you restart your entire backend.</p>
+        <p>Both .db files are the databases that holder users and passwords. The python scripts automatically creates them.</p>
+        <p>Here's a full breakdown: </p>
+        <pre style="font-size: 1.2rem;"><code>    /backend
+        database.py   <- Database Setup
+        fakesalts.py  <- Fakes Salts
+        jwtfuncs.py   <- JWT Functions
+        main.py       <- API setup
+        models.py     <- Models
+
+        entries.db    <- Entries
+        users.db      <- Users
+        .env
+        </code></pre>
+
+        <h2 class="med txtcoral fs-2 mt-5">Endpoints</h2>
+        <p>The API has seven endpoints to call.</p>
+
+        <h3 class="mt-2">POST .../signup</h3>
+        <p>Signup accepts an <code>email</code>, <code>salt</code>, and <code>authkey</code> via a request body. /signup returns the <code>userId</code> and <code>email</code> in the response body.</p>
+
+        <h3 class="mt-2">GET .../login/start</h3>
+        <p>Login Start accepts a <code>userEmail</code> via a query parameters. /login/start returns the users <code>salt</code> in the response body.</p>
+        <p> It is important to note that the default backend will fake a salt to avoid leaking what emails are in use. Each fake salt is consistantly made based on the query <code>userEmail</code>. See <code>fakesalts.py</code></p>
+
+        <h3 class="mt-2">GET .../login/validate</h3>
+        <p>Login Validate accepts a <code>userEmail</code> and <code>authKey</code> via query parameters. /login/validate returns a signed JWT used for all other endpoints.</p>
+        <p>Login Validate may return a         
+        <ul>
+            <li><b>400</b> If the email or authKey is expired</li>
+            <li><b>200</b> if the request was successful.</li>
+        </ul></p>
+
+        <h3 class="mt-2">GET .../entry/get</h3>
+        <p>entry/get requires a valid JWT in the HTTPBearer</p>
+        <p>entry/get returns an array of objects. Each object contains an <code>entryId</code>, <code>ciphertext</code>, and <code>iv</code>.</p>
+        <p>The default frontend uses the <code>iv</code> to decrypted the <code>ciphertext</code> into a object containing a title, website, username, and password.</p>
+        <p>entry/get will return a <ul>
+            <li><b>400</b> If the JWT is invalid or expired</li>
+            <li><b>401</b> If the JWT is missing</li>
+            <li><b>200</b> if the request was successful.</li>
+        </ul></p>
+
+        <h3>POST .../entry/new</h3>
+        <p>/entry/new requires a valid JWT in the HTTPBearer</p>
+        <p>/entry/new accepts <code>ciphertext</code> and <code>iv</code> in the request body. Entry new returns a response body with <code>ciphertext</code>, <code>iv</code>, the <code>userId</code>, and the <code>entryId</code>.</p>
+        <p>entry/new will create a new password in the backend database. This password is tied to the user.</p>
+        <p>/entry/new will return a 
+            <ul>
+                <li><b>400</b> if the JWT is invalid or expired</li>
+                <li><b>401</b> if the JWT is missing</li>
+                <li><b>422</b> if <code>ciphertex</code> or <code>iv</code> is missing.</li>
+                <li><b>200</b> if the request was successful.</li>
+            </ul>
+        </p>
+
+        <h3>POST .../entry/change/</h3>
+        <p>entry/change requires a valid JWT in the HTTPBearer</p>
+        <p>Via the request body, entry/change accepts the <code>entryId</code> of the entry to be changed with updated <code>cipherText</code> and <code>iv</code>.</p>
+        <p>entry/change will return a 
+            <ul>
+                <li><b>400</b> if the JWT is invalid or expired. Or if the userId dosn't match</li>
+                <li><b>401</b> if the JWT is missing.</li>
+                <li><b>403</b> if a entry tied to another user is attempted to be changed</li>
+                <li><b>404</b> if the entryId dosn't exist.</li>
+                <li><b>200</b> if the request was successful.</li>
+            </ul>
+        </p>
+
+        <h3>DELETE ../entry/delete</h3>
+        <p>entry/delete requires a valid JWT in the HTTPBearer</p>
+        <p>entry/delete will delete an entry based on the entryId. entry/delete checks the given iv aganist the stored iv to make sure the entries match.</p>
+        <p>Via the request body, entry/delete accepts the <code>entryId</code> and an <code>iv</code>.</p>
+        <p>entry/delete will return a </p>
+            <ul>
+                <li><b>400</b> if the JWT is invalid or expired.</li>
+                <li><b>401</b> if the JWT is missing.</li>
+                <li><b>403</b> if the entry is tied to another users account, not yours.</li>
+                <li><b>200</b> if the request was successful.</li>
+            </ul>
+    </section>
+    <section id="bottom" class="mx-auto mt-5">
+        <p class="text-center">More info is on the <a href="https://github.com/asuperidea/assword">repo</a></p>
+        <p class="text-center">Made with <3 by <a href="https://simoncrystal.dev">Simon</a></p>
+    </section>
+</body>
+</html>
