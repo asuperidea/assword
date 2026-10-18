@@ -1,6 +1,7 @@
 backend/node_modules
 backend/__pycache__
 *.db
+*.out
 *.css.map
 
 .DS_Store
